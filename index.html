@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clover Lotus Studio - AI-Powered Creative Toolkit</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Base Styling */
+        body {
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            color: #1F2937;
+            overflow-x: hidden;
+        }
+
+        /* Modern color palette */
+        :root {
+            --color-primary: #8B5CF6;
+            --color-primary-light: #a78bfa;
+            --color-primary-dark: #7C3AED;
+            --color-secondary: #EC4899;
+            --color-secondary-light: #f472b6;
+            --color-accent: #10b981;
+            --color-surface: #ffffff;
+            --color-background: #f8fafc;
+        }
+        
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Button styling */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 5px 15px -5px rgba(139, 92, 246, 0.5);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 8px 20px -5px rgba(139, 92, 246, 0.7);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-secondary-light));
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 5px 15px -5px rgba(236, 72, 153, 0.5);
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            box-shadow: 0 8px 20px -5px rgba(236, 72, 153, 0.7);
+            transform: translateY(-2px);
+        }
+        
+        /* Card styling */
+        .card {
+            background: var(--color-surface);
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        
+        /* Animation for floating elements */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="glass fixed top-0 left-0 right-0 z-50 py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-xl flex items-center justify-center">
+  <img src="https://aditya-cmd-max.github.io/exonova-/cloverlogo.png" alt="Clover Lotus Logo" class="w-full h-full object-contain" />
+</div>
+<div>
+
+                <span class="text-xl font-bold text-gray-800">Clover Studio</span>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#features" class="text-gray-600 hover:text-purple-600 transition-colors font-medium">Features</a>
+                <a href="#how-it-works" class="text-gray-600 hover:text-purple-600 transition-colors font-medium">How It Works</a>
+                <a href="#testimonials" class="text-gray-600 hover:text-purple-600 transition-colors font-medium">Testimonials</a>
+                <a href="#pricing" class="text-gray-600 hover:text-purple-600 transition-colors font-medium">Pricing</a>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <a href="#" class="text-gray-600 hover:text-purple-600 transition-colors font-medium hidden md:block">Sign In</a>
+                <a href="https://aditya-cmd-max.github.io/clover/app/" class="btn-primary px-6 py-2 rounded-xl font-semibold">Launch App</a>
+            </div>
+            
+            <!-- Mobile menu button -->
+            <button id="mobile-menu-toggle" class="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden absolute top-full left-0 right-0 bg-white shadow-lg rounded-b-2xl p-6 hidden">
+            <div class="flex flex-col gap-4">
+                <a href="#features" class="text-gray-600 hover:text-purple-600 transition-colors font-medium py-2">Features</a>
+                <a href="#how-it-works" class="text-gray-600 hover:text-purple-600 transition-colors font-medium py-2">How It Works</a>
+                <a href="#testimonials" class="text-gray-600 hover:text-purple-600 transition-colors font-medium py-2">Testimonials</a>
+                <a href="#pricing" class="text-gray-600 hover:text-purple-600 transition-colors font-medium py-2">Pricing</a>
+                <a href="#" class="text-gray-600 hover:text-purple-600 transition-colors font-medium py-2">Sign In</a>
+                <a href="https://aditya-cmd-max.github.io/clover/app/" class="btn-primary px-6 py-3 rounded-xl font-semibold text-center mt-2">Launch App</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 md:pt-40 md:pb-28 px-6">
+        <div class="container mx-auto max-w-6xl">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tight mb-6">
+                        Your Ideas, <span class="gradient-text">Designed</span>.
+                    </h1>
+                    <p class="text-xl text-gray-600 mb-8 max-w-lg">
+                        Clover Lotus Studio is an AI-powered creative toolkit that helps designers, writers, and creators bring their ideas to life with cutting-edge AI assistance.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="https://aditya-cmd-max.github.io/clover/app/" class="btn-primary px-8 py-4 rounded-xl font-semibold text-lg text-center">
+                            <i data-lucide="sparkles" class="w-5 h-5 mr-2 inline-block"></i>
+                            Start Creating Now
+                        </a>
+                        <a href="#features" class="px-8 py-4 rounded-xl font-semibold text-lg text-center border-2 border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors">
+                            Explore Features
+                        </a>
+                    </div>
+                    <div class="mt-8 flex items-center gap-4 text-gray-500">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                            <span>No credit card required</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                            <span>Free to start</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2 relative">
+                    <div class="card p-6 floating">
+                        <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8">
+                            <div class="flex items-center gap-3 mb-6">   <div class="w-12 h-12 rounded-xl flex items-center justify-center">
+  <img src="https://aditya-cmd-max.github.io/exonova-/cloverlogo.png" alt="Clover Lotus Logo" class="w-full h-full object-contain" />
+</div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-800">Clover Studio</h3>
+                                    <p class="text-sm text-gray-500">AI Creative Toolkit</p>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div class="flex items-center gap-3 p-3 bg-white rounded-xl shadow-sm">
+                                    <i data-lucide="palette" class="w-5 h-5 text-purple-500"></i>
+                                    <span class="text-gray-700">Design Tools</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 bg-white rounded-xl shadow-sm">
+                                    <i data-lucide="file-edit" class="w-5 h-5 text-pink-500"></i>
+                                    <span class="text-gray-700">Content Creator</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 bg-white rounded-xl shadow-sm">
+                                    <i data-lucide="lightbulb" class="w-5 h-5 text-yellow-500"></i>
+                                    <span class="text-gray-700">AI Brainstormer</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 bg-white rounded-xl shadow-sm">
+                                    <i data-lucide="scan-text" class="w-5 h-5 text-green-500"></i>
+                                    <span class="text-gray-700">Design Critique</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl text-white text-center">
+                                <p class="font-bold"> <img src="https://aditya-cmd-max.github.io/exonova-/exonova-logo.png" alt="Exonova Logo" class="w-6 h-6 object-contain">Powered by Exonova</p>
+                                <p class="text-sm opacity-90">Your creative assistant</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Floating elements -->
+                    <div class="absolute -top-4 -right-4 w-24 h-24 bg-purple-100 rounded-full opacity-70 floating" style="animation-delay: 0.5s;"></div>
+                    <div class="absolute -bottom-4 -left-4 w-20 h-20 bg-pink-100 rounded-full opacity-70 floating" style="animation-delay: 1s;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 px-6 bg-white">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Powerful Creative Tools</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Everything you need to bring your creative vision to life, powered by advanced AI.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="card p-6">
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-xl mb-4">
+                        <i data-lucide="palette" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Design Tools</h3>
+                    <p class="text-gray-600 mb-4">Generate color palettes, typography pairings, and custom shadows with our intuitive design tools.</p>
+                    <ul class="text-gray-500 space-y-2">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Color Palette Generator</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>AI Typography Pairer</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Shadow Customizer</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="card p-6">
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white text-xl mb-4">
+                        <i data-lucide="file-edit" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Content Creator</h3>
+                    <p class="text-gray-600 mb-4">Generate blog posts, ad copy, social media captions, and more with AI-powered content creation.</p>
+                    <ul class="text-gray-500 space-y-2">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Blog Post Generator</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Ad Copy Creation</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Social Media Content</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="card p-6">
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center text-white text-xl mb-4">
+                        <i data-lucide="lightbulb" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">AI Brainstormer</h3>
+                    <p class="text-gray-600 mb-4">Get unstuck with unique ideas for any topic, marketing campaign, or project name.</p>
+                    <ul class="text-gray-500 space-y-2">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Creative Ideation</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Project Naming</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Marketing Concepts</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="card p-6">
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center text-white text-xl mb-4">
+                        <i data-lucide="clapperboard" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Media Ideas</h3>
+                    <p class="text-gray-600 mb-4">Find inspiration for your next audio or visual project with AI-generated media concepts.</p>
+                    <ul class="text-gray-500 space-y-2">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Video Concepts</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Music Inspiration</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Creative Storytelling</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Feature 5 -->
+                <div class="card p-6">
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-red-500 to-pink-500 flex items-center justify-center text-white text-xl mb-4">
+                        <i data-lucide="scan-text" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Design Critique</h3>
+                    <p class="text-gray-600 mb-4">Get instant, expert-level feedback on your designs, copy, and creative concepts.</p>
+                    <ul class="text-gray-500 space-y-2">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Design Feedback</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Copy Improvement</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Visual Impact Analysis</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Feature 6 -->
+                <div class="card p-6">
+                  <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white text-xl mb-4">
+  <img src="https://aditya-cmd-max.github.io/exonovaai/logo.png" alt="Exonova Logo" class="w-8 h-8 object-contain" />
+</div>
+
+                   
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">AI-Powered</h3>
+                    <p class="text-gray-600 mb-4">Powered by Exonova's El Futuro AI for the most advanced creative assistance available.</p>
+                    <ul class="text-gray-500 space-y-2">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>El Futuro Integration</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Real-time Generation</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            <span>Iterative Improvements</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-20 px-6 bg-gray-50">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">How It Works</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Simple steps to unlock your creative potential with AI assistance.</p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row gap-8 items-center">
+                <div class="md:w-1/2">
+                    <div class="space-y-8">
+                        <!-- Step 1 -->
+                        <div class="flex gap-6">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-lg">
+                                1
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Choose Your Tool</h3>
+                                <p class="text-gray-600">Select from our suite of creative tools based on what you need - design, content, brainstorming, or critique.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 2 -->
+                        <div class="flex gap-6">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white font-bold text-lg">
+                                2
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Provide Your Prompt</h3>
+                                <p class="text-gray-600">Describe what you're looking for in detail. The more specific you are, the better the AI can assist you.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 3 -->
+                        <div class="flex gap-6">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center text-white font-bold text-lg">
+                                3
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Generate & Refine</h3>
+                                <p class="text-gray-600">Get your AI-generated result instantly, then refine it with follow-up requests until it's perfect.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 4 -->
+                        <div class="flex gap-6">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center text-white font-bold text-lg">
+                                4
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">Export & Use</h3>
+                                <p class="text-gray-600">Copy your final result and use it in your projects. All tools provide export options for easy integration.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <div class="card p-6">
+                        <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8">
+                            <div class="mb-6">
+                                <h3 class="text-2xl font-bold text-gray-800 mb-2">Try It Yourself</h3>
+                                <p class="text-gray-600">See how the AI Brainstormer can help generate creative project names.</p>
+                            </div>
+                            
+                            <div class="bg-white rounded-xl p-4 mb-4">
+                                <p class="text-gray-700 font-medium">"Brainstorm 5 creative names for an eco-friendly coffee shop"</p>
+                            </div>
+                            
+                            <div class="space-y-3">
+                                <div class="bg-white rounded-lg p-3 shadow-sm">
+                                    <p class="text-gray-800 font-medium">1. Earth Brew Collective</p>
+                                </div>
+                                <div class="bg-white rounded-lg p-3 shadow-sm">
+                                    <p class="text-gray-800 font-medium">2. Conscious Coffee Hub</p>
+                                </div>
+                                <div class="bg-white rounded-lg p-3 shadow-sm">
+                                    <p class="text-gray-800 font-medium">3. Green Bean Sanctuary</p>
+                                </div>
+                                <div class="bg-white rounded-lg p-3 shadow-sm">
+                                    <p class="text-gray-800 font-medium">4. Sustainable Sips Café</p>
+                                </div>
+                                <div class="bg-white rounded-lg p-3 shadow-sm">
+                                    <p class="text-gray-800 font-medium">5. Eco Roast Retreat</p>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 text-center">
+                                <a href="#app" class="btn-primary px-6 py-3 rounded-xl font-semibold inline-block">
+                                    Try All Tools
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 px-6 bg-white">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Loved by Creators</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">See what designers, writers, and creators are saying about Clover Lotus Studio.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="card p-6">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold">
+                            S
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Sarah Johnson</h4>
+                            <p class="text-gray-500 text-sm">Graphic Designer</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">"The color palette generator has completely transformed my workflow. I can create harmonious color schemes in seconds instead of hours!"</p>
+                    <div class="flex text-yellow-400">
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="card p-6">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white font-bold">
+                            M
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Michael Chen</h4>
+                            <p class="text-gray-500 text-sm">Content Marketer</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">"As a content creator, the AI writing tools have been a game-changer. I can generate high-quality drafts in minutes and focus on polishing instead of starting from scratch."</p>
+                    <div class="flex text-yellow-400">
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="card p-6">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center text-white font-bold">
+                            A
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Alex Rivera</h4>
+                            <p class="text-gray-500 text-sm">UX Designer</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">"The design critique feature is like having a senior designer looking over my shoulder. It catches things I miss and suggests improvements I wouldn't have considered."</p>
+                    <div class="flex text-yellow-400">
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="app" class="py-20 px-6 bg-gradient-to-br from-purple-500 to-pink-500 text-white">
+        <div class="container mx-auto max-w-4xl text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Boost Your Creativity?</h2>
+            <p class="text-xl opacity-90 mb-8 max-w-2xl mx-auto">Join thousands of creators who are already using Clover Studio to bring their ideas to life.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://aditya-cmd-max.github.io/clover/app/" class="bg-white text-purple-600 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-100 transition-colors">
+                    <i data-lucide="sparkles" class="w-5 h-5 mr-2 inline-block"></i>
+                    Start Creating Now
+                </a>
+                <a href="#features" class="bg-transparent border-2 border-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white hover:bg-opacity-10 transition-colors">
+                    Explore Features
+                </a>
+            </div>
+            <p class="mt-6 opacity-80">No credit card required • Free to start • Cancel anytime</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 bg-gray-900 text-white">
+        <div class="container mx-auto max-w-6xl">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center gap-3 mb-6 md:mb-0">
+                  <div class="w-12 h-12 rounded-xl flex items-center justify-center">
+  <img src="https://aditya-cmd-max.github.io/exonova-/cloverlogo.png" alt="Clover Lotus Logo" class="w-full h-full object-contain" />
+</div>
+<div>
+
+                    <span class="text-xl font-bold">Clover Studio</span>
+                </div>
+                
+                <div class="flex flex-wrap justify-center gap-8 mb-6 md:mb-0">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Features</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Pricing</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Blog</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Support</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy</a>
+                </div>
+                
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 transition-colors">
+                        <i data-lucide="twitter" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 transition-colors">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 transition-colors">
+                        <i data-lucide="github" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">
+                <p>© 2025 Clover Studio. All rights reserved.</p><p>Powered by <strong>Exonova</strong> by Aditya Jha</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-toggle').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
