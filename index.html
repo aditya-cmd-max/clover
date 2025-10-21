@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clover Lotus Studio</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Base Styling - Modern gradient background */
+        body {
+            font-family: 'Inter', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            color: #1F2937;
+            overflow-x: hidden;
+        }
+
+        /* Modern color palette */
+        :root {
+            --color-primary: #8B5CF6;
+            --color-primary-light: #a78bfa;
+            --color-primary-dark: #7C3AED;
+            --color-secondary: #EC4899;
+            --color-secondary-light: #f472b6;
+            --color-accent: #10b981;
+            --color-surface: #ffffff;
+            --color-background: #f8fafc;
+        }
+        
+        /* Glassmorphism for Sidebar */
+        .sidebar {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease-in-out;
+            z-index: 50;
+        }
+        .sidebar.hidden-mobile {
+            transform: translateX(-100%);
+        }
+        @media (min-width: 768px) {
+            .sidebar.hidden-mobile {
+                transform: translateX(0);
+            }
+        }
+        
+        /* Active Nav Item Styling */
+        .nav-item.active {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 5px 15px -5px rgba(139, 92, 246, 0.5);
+        }
+        .nav-item.active svg {
+            stroke: white;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        
+        /* Loading Spinner */
+        .loader {
+            border: 4px solid #F3F4F6;
+            border-top: 4px solid var(--color-primary);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Card styling */
+        .card {
+            background: var(--color-surface);
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+        
+        /* Button styling */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 5px 15px -5px rgba(139, 92, 246, 0.5);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 8px 20px -5px rgba(139, 92, 246, 0.7);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--color-secondary), var(--color-secondary-light));
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 5px 15px -5px rgba(236, 72, 153, 0.5);
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            box-shadow: 0 8px 20px -5px rgba(236, 72, 153, 0.7);
+            transform: translateY(-2px);
+        }
+        
+        /* Markdown-like styling for AI output */
+        .ai-output h1 { font-size: 2.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 1rem; color: #1F2937; }
+        .ai-output h2 { font-size: 1.875rem; font-weight: 700; margin-top: 1.25rem; margin-bottom: 0.75rem; color: #374151; }
+        .ai-output h3 { font-size: 1.5rem; font-weight: 600; margin-top: 1rem; margin-bottom: 0.5rem; color: #4B5563; }
+        .ai-output p { margin-bottom: 1rem; line-height: 1.75; }
+        .ai-output ul { list-style-type: disc; margin-left: 2rem; margin-bottom: 1rem; padding-left: 0; }
+        .ai-output ol { list-style-type: decimal; margin-left: 2rem; margin-bottom: 1rem; padding-left: 0; }
+        .ai-output li { margin-bottom: 0.5rem; }
+        .ai-output blockquote { border-left: 4px solid var(--color-secondary); padding: 0.5rem 1rem; margin: 1rem 0; font-style: italic; background-color: #FCE7F6; border-radius: 0.5rem; color: #9D174D; }
+        .ai-output code { background-color: #F3F4F6; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-family: monospace; }
+        .ai-output pre { background-color: #1F2937; color: #F0F4F8; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin-bottom: 1rem; }
+
+        /* Modal specific styles */
+        .modal {
+            background-color: rgba(0, 0, 0, 0.4);
+            transition: opacity 0.3s ease;
+        }
+        .modal-content {
+            transform: scale(0.95);
+            transition: transform 0.3s ease-out;
+        }
+        .modal.open .modal-content {
+            transform: scale(1);
+        }
+
+        /* Shadow Generator Preview */
+        #shadow-preview {
+            width: 100%;
+            height: 150px;
+            background-color: white;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        /* Color swatch styling */
+        .color-swatch {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .color-swatch:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Input styling */
+        .input-modern {
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        .input-modern:focus {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+            outline: none;
+        }
+        
+        /* Range slider styling */
+        input[type="range"] {
+            -webkit-appearance: none;
+            height: 8px;
+            border-radius: 5px;
+            background: #e2e8f0;
+            outline: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <div class="flex h-screen relative">
+        <!-- Mobile Menu Toggle Button -->
+        <button id="menu-toggle" class="md:hidden fixed top-6 left-6 z-50 p-3 rounded-full bg-white shadow-xl text-gray-800 focus:outline-none focus:ring-4 focus:ring-violet-200 transition-all duration-300">
+            <i data-lucide="menu"></i>
+        </button>
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar fixed inset-y-0 left-0 w-72 flex-shrink-0 p-8 flex flex-col justify-between hidden-mobile md:static">
+            <div>
+                <div class="flex items-center gap-3 mb-12">
+                 <div class="w-12 h-12 rounded-xl flex items-center justify-center">
+  <img src="https://aditya-cmd-max.github.io/exonova-/cloverlogo.png" alt="Clover Lotus Logo" class="w-full h-full object-contain" />
+</div>
+<div>
+
+                        <h1 class="text-2xl font-bold text-gray-800 tracking-tight">Clover Studio</h1>
+                        <p class="text-xs text-gray-500 mt-1">Creative AI Toolkit</p>
+                    </div>
+                </div>
+                <nav class="flex flex-col gap-2">
+                    <a href="#welcome" class="nav-item flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 hover:bg-violet-50 active">
+                        <i data-lucide="home" class="w-5 h-5"></i>
+                        <span>Welcome</span>
+                    </a>
+                    <a href="#design" class="nav-item flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 hover:bg-violet-50">
+                        <i data-lucide="palette" class="w-5 h-5"></i>
+                        <span>Design Tools</span>
+                    </a>
+                    <a href="#content" class="nav-item flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 hover:bg-violet-50">
+                        <i data-lucide="file-edit" class="w-5 h-5"></i>
+                        <span>Content Creator</span>
+                    </a>
+                    <a href="#brainstorm" class="nav-item flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 hover:bg-violet-50">
+                        <i data-lucide="lightbulb" class="w-5 h-5"></i>
+                        <span>AI Brainstormer</span>
+                    </a>
+                    <a href="#media" class="nav-item flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 hover:bg-violet-50">
+                        <i data-lucide="clapperboard" class="w-5 h-5"></i>
+                        <span>Media Ideas</span>
+                    </a>
+                    <a href="#critique" class="nav-item flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 hover:bg-violet-50">
+                        <i data-lucide="scan-text" class="w-5 h-5"></i>
+                        <span>Design Critique ✨</span>
+                    </a>
+                </nav>
+            </div>
+            <div class="border-t border-gray-200 pt-6">
+                 <a href="#" class="flex items-center gap-3 text-gray-600 hover:text-gray-900 transition-colors p-2 rounded-lg hover:bg-gray-100">
+                    <i data-lucide="settings" class="w-5 h-5"></i>
+                    <span>Settings</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-8 md:p-12 overflow-y-auto">
+            
+            <!-- Welcome View -->
+            <div id="welcome" class="page-view h-full flex flex-col items-center justify-center text-center">
+                <div class="max-w-2xl">
+                    <h2 class="text-5xl md:text-6xl font-extrabold text-gray-900 tracking-tight mb-6">Your Ideas, <span class="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Designed</span>.</h2>
+                    <p class="mt-4 text-xl text-gray-600 mb-10">Start a project by selecting a creative tool from the sidebar. Your next masterpiece awaits!</p>
+                     <div class="card p-8 max-w-md mx-auto">
+                         <div class="flex items-center justify-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
+                                <i data-lucide="sparkles" class="text-white w-5 h-5"></i>
+                            </div>
+                            <div class="flex items-center gap-2">
+  <img src="https://aditya-cmd-max.github.io/exonova-/exonova-logo.png" alt="Exonova Logo" class="w-6 h-6 object-contain">
+  <p class="font-bold text-gray-700 text-lg">Powered by Exonova</p>
+</div>
+
+                         </div>
+                         <p class="text-gray-500 text-sm">Use detailed, descriptive prompts to guide the AI to the perfect result.</p>
+                     </div>
+                </div>
+            </div>
+
+            <!-- Design Tools View (Expanded) -->
+            <div id="design" class="page-view hidden space-y-10">
+                <div class="mb-8">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-2">🎨 Design Tools</h2>
+                    <p class="text-gray-500 text-lg">Create beautiful color schemes, typography pairings, and custom shadows</p>
+                </div>
+                
+                <!-- Color Palette Generator -->
+                <div class="card p-8">
+                    <h3 class="text-2xl font-semibold mb-4 flex items-center gap-3"><i data-lucide="paint-bucket" class="w-6 h-6 text-pink-500"></i> Color Palette Generator</h3>
+                    <p class="text-gray-600 mb-6">Click to generate a fresh, random color palette. Click a swatch to copy its hex code.</p>
+                    <button id="generate-palette-btn" class="btn-secondary px-6 py-3 rounded-xl font-semibold">
+                        <i data-lucide="refresh-cw" class="w-4 h-4 mr-2 inline-block"></i>
+                        Generate Palette
+                    </button>
+                    <div id="palette-container" class="mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+                        <!-- Color swatches will be injected here -->
+                    </div>
+                </div>
+
+                <!-- Typography Pairer (AI-Powered) -->
+                <div class="card p-8">
+                    <h3 class="text-2xl font-semibold mb-4 flex items-center gap-3"><i data-lucide="type" class="w-6 h-6 text-violet-500"></i> AI Typography Pairer</h3>
+                    <p class="text-gray-600 mb-6">Enter a mood or purpose (e.g., "playful branding," "academic report," "minimalist portfolio") to get a perfect font combination.</p>
+                    <div class="ai-tool-container" data-tool="typography">
+                        <textarea class="input-modern w-full h-20" placeholder="e.g., A font pairing for a children's book website that feels warm and readable..."></textarea>
+                        <button class="generate-btn mt-4 btn-primary px-6 py-3 rounded-xl font-semibold">
+                            <i data-lucide="sparkles" class="w-4 h-4 mr-2 inline-block"></i>
+                            Suggest Fonts
+                        </button>
+                        <div class="output-container mt-8 bg-gray-50 p-6 rounded-xl border border-gray-200 min-h-[100px] text-left" data-last-prompt="" data-tool-type="typography">
+                            <p class="text-gray-500 italic">Font suggestions will appear here.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tailwind Shadow Customizer (Utility) -->
+                <div class="card p-8">
+                    <h3 class="text-2xl font-semibold mb-4 flex items-center gap-3"><i data-lucide="box" class="w-6 h-6 text-blue-500"></i> Tailwind Shadow Customizer</h3>
+                    <p class="text-gray-600 mb-6">Adjust the sliders to create a custom shadow effect and copy the resulting CSS and Tailwind utility classes.</p>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                        <div>
+                            <label for="shadow-x" class="block text-sm font-medium text-gray-700 mb-2">X Offset (px)</label>
+                            <input type="range" id="shadow-x" min="-20" max="20" value="0" class="w-full">
+                            <span id="shadow-x-val" class="mt-2 block text-center text-sm font-bold text-gray-800">0</span>
+                        </div>
+                        <div>
+                            <label for="shadow-y" class="block text-sm font-medium text-gray-700 mb-2">Y Offset (px)</label>
+                            <input type="range" id="shadow-y" min="-20" max="20" value="10" class="w-full">
+                            <span id="shadow-y-val" class="mt-2 block text-center text-sm font-bold text-gray-800">10</span>
+                        </div>
+                        <div>
+                            <label for="shadow-blur" class="block text-sm font-medium text-gray-700 mb-2">Blur Radius (px)</label>
+                            <input type="range" id="shadow-blur" min="0" max="40" value="20" class="w-full">
+                            <span id="shadow-blur-val" class="mt-2 block text-center text-sm font-bold text-gray-800">20</span>
+                        </div>
+                        <div>
+                            <label for="shadow-spread" class="block text-sm font-medium text-gray-700 mb-2">Spread (px)</label>
+                            <input type="range" id="shadow-spread" min="-15" max="15" value="-5" class="w-full">
+                            <span id="shadow-spread-val" class="mt-2 block text-center text-sm font-bold text-gray-800">-5</span>
+                        </div>
+                    </div>
+
+                    <div id="shadow-preview-container" class="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                        <div id="shadow-preview" class="flex items-center justify-center">
+                            <p class="text-lg font-semibold text-gray-600">Shadow Preview</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 space-y-4">
+                        <h4 class="text-lg font-semibold text-gray-800">Output Code:</h4>
+                        <div class="bg-gray-800 text-white p-4 rounded-xl flex justify-between items-center" id="css-output-container">
+                            <code id="shadow-css-output" class="text-sm overflow-x-auto">box-shadow: 0px 10px 20px -5px rgba(0, 0, 0, 0.1);</code>
+                            <button class="copy-code-btn text-gray-400 hover:text-white ml-4 flex-shrink-0" data-target="shadow-css-output" title="Copy CSS"><i data-lucide="copy" class="w-4 h-4"></i></button>
+                        </div>
+                        <div class="bg-gray-800 text-white p-4 rounded-xl flex justify-between items-center" id="tailwind-output-container">
+                             <code id="shadow-tailwind-output" class="text-sm overflow-x-auto">shadow-[0px_10px_20px_-5px_rgba(0,0,0,0.1)]</code>
+                             <button class="copy-code-btn text-gray-400 hover:text-white ml-4 flex-shrink-0" data-target="shadow-tailwind-output" title="Copy Tailwind Class"><i data-lucide="copy" class="w-4 h-4"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+            <!-- Content Creator View -->
+            <div id="content" class="page-view hidden">
+                 <div class="mb-8">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-2">✍️ Content Creator</h2>
+                    <p class="text-gray-500 text-lg">Generate blog posts, ad copy, social media captions, and more.</p>
+                 </div>
+                 <div class="ai-tool-container" data-tool="content">
+                    <textarea class="input-modern w-full h-32" placeholder="e.g., Write a 500-word persuasive blog post about the environmental benefits of using recycled materials..."></textarea>
+                    <button class="generate-btn mt-4 btn-primary px-6 py-3 rounded-xl font-semibold">
+                        <i data-lucide="zap" class="w-4 h-4 mr-2 inline-block"></i>
+                        Generate Content
+                    </button>
+                    <div class="output-container mt-8 card p-8 min-h-[200px] text-left" data-last-prompt="" data-tool-type="content">
+                        <p class="text-gray-500 italic">Your generated content will appear here.</p>
+                    </div>
+                 </div>
+            </div>
+
+            <!-- AI Brainstormer View -->
+            <div id="brainstorm" class="page-view hidden">
+                <div class="mb-8">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-2">🧠 AI Brainstormer</h2>
+                    <p class="text-gray-500 text-lg">Get unstuck with unique ideas for any topic, marketing campaign, or project name.</p>
+                </div>
+                 <div class="ai-tool-container" data-tool="brainstorm">
+                    <textarea class="input-modern w-full h-32" placeholder="e.g., Brainstorm 10 catchy, eco-friendly names for a sustainable fashion brand..."></textarea>
+                    <button class="generate-btn mt-4 btn-primary px-6 py-3 rounded-xl font-semibold">
+                        <i data-lucide="zap" class="w-4 h-4 mr-2 inline-block"></i>
+                        Generate Ideas
+                    </button>
+                    <div class="output-container mt-8 card p-8 min-h-[200px] text-left" data-last-prompt="" data-tool-type="brainstorm">
+                        <p class="text-gray-500 italic">Your generated ideas will appear here.</p>
+                    </div>
+                 </div>
+            </div>
+
+            <!-- Media Idea Generator View -->
+            <div id="media" class="page-view hidden">
+                <div class="mb-8">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-2">🎧 Music & Video Idea Generator</h2>
+                    <p class="text-gray-500 text-lg">Find inspiration for your next audio or visual project.</p>
+                </div>
+                <div class="ai-tool-container" data-tool="media">
+                    <textarea class="input-modern w-full h-32" placeholder="e.g., Give me 5 creative ideas for a short film set entirely within a futuristic subway car."></textarea>
+                    <button class="generate-btn mt-4 btn-primary px-6 py-3 rounded-xl font-semibold">
+                        <i data-lucide="zap" class="w-4 h-4 mr-2 inline-block"></i>
+                        Generate Concepts
+                    </button>
+                    <div class="output-container mt-8 card p-8 min-h-[200px] text-left" data-last-prompt="" data-tool-type="media">
+                        <p class="text-gray-500 italic">Your generated concepts will appear here.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Design Critique View -->
+            <div id="critique" class="page-view hidden">
+                <div class="mb-8">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-2">🔍 Design Critique & Polish</h2>
+                    <p class="text-gray-500 text-lg">Paste your design concept, copy, or pitch below to get instant, expert-level feedback on clarity, tone, and visual impact.</p>
+                </div>
+                <div class="ai-tool-container" data-tool="critique">
+                    <textarea class="input-modern w-full h-32" placeholder="e.g., Critique this marketing copy: 'Our new product is fast, reliable, and cheap. Buy it today!'"></textarea>
+                    <button class="generate-btn mt-4 btn-primary px-6 py-3 rounded-xl font-semibold">
+                        <i data-lucide="scan-text" class="w-4 h-4 mr-2 inline-block"></i>
+                        Get Critique ✨
+                    </button>
+                    <div class="output-container mt-8 card p-8 min-h-[200px] text-left" data-last-prompt="" data-tool-type="critique">
+                        <p class="text-gray-500 italic">The AI Art Director will provide feedback here.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Custom Toast Notification Container -->
+        <div id="toast-container" class="fixed bottom-5 right-5 z-[100] space-y-3">
+            <!-- Toasts will be dynamically added here -->
+        </div>
+    </div>
+
+    <!-- Improvement Modal/Popup Structure -->
+    <div id="improvement-modal" class="modal fixed inset-0 flex items-center justify-center opacity-0 pointer-events-none z-[60]">
+        <div class="modal-content card p-8 w-full max-w-lg mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">Refine Your Response</h3>
+                <button id="close-modal-btn" class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <p class="text-gray-600 mb-4">What changes would you like to make to the previous result? (e.g., "Make it shorter," "Use a playful tone," or "Add more examples.")</p>
+            <textarea id="improvement-prompt-textarea" class="input-modern w-full h-32" placeholder="I need the tone to be more academic and include two citation examples..."></textarea>
+            <div class="mt-6 flex justify-end gap-3">
+                <button id="cancel-improvement-btn" class="px-6 py-2 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors">Cancel</button>
+                <button id="submit-improvement-btn" class="btn-primary px-6 py-2 rounded-xl font-semibold">
+                    <i data-lucide="sparkles" class="w-4 h-4 mr-2 inline-block"></i>
+                    Improve Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        // --- MANDATORY FIREBASE/FIRESTORE IMPORTS ---
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // --- GLOBAL FIREBASE/ENV VARS ---
+        let app;
+        let db;
+        let auth;
+        let userId = 'anonymous';
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            // --- FIREBASE INITIALIZATION & AUTHENTICATION (CRITICAL FIX) ---
+            if (firebaseConfig) {
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                setLogLevel('Debug'); // Enable Firestore logging
+
+                try {
+                    if (initialAuthToken) {
+                        await signInWithCustomToken(auth, initialAuthToken);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                    console.log("Firebase Auth successful.");
+                } catch (e) {
+                    console.error("Firebase Auth failed:", e);
+                }
+
+                // Listen for Auth state changes
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        console.log("User ID set:", userId);
+                    } else {
+                        userId = 'anonymous';
+                    }
+                    
+                    initializeAppLogic(); 
+                });
+
+            } else {
+                console.error("Firebase configuration is missing. Running in non-persistent mode.");
+                initializeAppLogic(); // Run logic without Firebase if config is missing
+            }
+        });
+
+
+        function initializeAppLogic() {
+            // --- Lucide Icons (Replaces Feather) ---
+            lucide.createIcons();
+
+            // --- Configuration ---
+            const apiKey = "AIzaSyAh4NfJ-TNNPSpZR2L3hsD5gdUyzcqZ8tc"; // You'll add your actual Gemini API key here
+            const systemInstructions = {
+                content: "You are an expert content writer and marketer. Generate clear, engaging, and well-structured content based on the user's request. Use extensive markdown for formatting including headers, lists, and paragraphs.",
+                brainstorm: "You are a world-class creative strategist. Provide a diverse range of unique, actionable, and innovative ideas based on the user's topic. Use detailed lists, bullet points, and strong headings for clarity.",
+                media: "You are a creative director for a film and music production studio. Generate compelling and imaginative concepts for videos, music, or other media. Think outside the box and use markdown for structured output.",
+                critique: "You are an experienced design and copy editor. Your role is to provide constructive, actionable, and professional critique on the user's input. Rate the design (out of 5 stars) on Clarity and Impact, then provide 3 specific areas for improvement and 3 concrete, polished alternative suggestions. Use markdown headers and lists for organization.",
+                typography: "You are a typographer and graphic designer. Based on the user's requested mood or purpose, suggest a primary heading font and a secondary body font that pair well. Provide a brief explanation for the pairing and mention where the fonts can be sourced (e.g., Google Fonts, Adobe Fonts, or standard system fonts). Structure the output using markdown headers and lists.Never use weirds look like continuous ----- or |----| or *** for bold or ## or anything... just answer clearly bold the text with <b> and italic from <i> or underline from <u>"
+            };
+
+            // --- DOM Elements ---
+            const sidebar = document.getElementById('sidebar');
+            const menuToggle = document.getElementById('menu-toggle');
+            const aiToolContainers = document.querySelectorAll('.ai-tool-container');
+            const improvementModal = document.getElementById('improvement-modal');
+            const closeBtn = document.getElementById('close-modal-btn');
+            const cancelBtn = document.getElementById('cancel-improvement-btn');
+            const submitImprovementBtn = document.getElementById('submit-improvement-btn');
+            const improvementTextarea = document.getElementById('improvement-prompt-textarea');
+            let currentOutputContainer = null; // Store the container being improved
+
+            // --- Utility Functions ---
+
+            // --- Toast Notification System ---
+            function showToast(message, type = 'success') {
+                const toastContainer = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                
+                let bgColor = 'bg-gradient-to-r from-purple-500 to-pink-500';
+                let icon = 'check-circle';
+
+                if (type === 'error') {
+                    bgColor = 'bg-gradient-to-r from-red-500 to-pink-500';
+                    icon = 'alert-triangle';
+                } else if (type === 'info') {
+                    bgColor = 'bg-gradient-to-r from-blue-500 to-cyan-500';
+                    icon = 'info';
+                }
+
+                toast.className = `flex items-center p-4 rounded-xl text-white shadow-xl transition-all duration-300 transform translate-x-0 ${bgColor}`;
+                toast.innerHTML = `
+                    <i data-lucide="${icon}" class="w-5 h-5 mr-3"></i>
+                    <span class="text-sm font-medium">${message}</span>
+                `;
+
+                toastContainer.appendChild(toast);
+                lucide.createIcons();
+
+                setTimeout(() => {
+                    toast.classList.add('opacity-0', 'translate-x-full');
+                    toast.addEventListener('transitionend', () => toast.remove());
+                }, 3000);
+            }
+
+            // --- Clipboard Utility ---
+            function copyToClipboard(text) {
+                const tempInput = document.createElement('input');
+                document.body.appendChild(tempInput);
+                tempInput.value = text;
+                tempInput.select();
+                try {
+                    document.execCommand('copy'); 
+                    showToast(`Copied ${text.toUpperCase()}!`, 'info');
+                } catch(e) {
+                    console.error('Failed to copy to clipboard:', e);
+                    showToast('Failed to copy text.', 'error');
+                }
+                document.body.removeChild(tempInput);
+            }
+
+            // --- General UI Logic ---
+
+            // Mobile Sidebar Toggle
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('hidden-mobile');
+                lucide.createIcons();
+            });
+
+            // Page Navigation
+            const navItems = document.querySelectorAll('.nav-item');
+            const pageViews = document.querySelectorAll('.page-view');
+
+            function switchView(hash) {
+                if (window.innerWidth < 768) {
+                    sidebar.classList.add('hidden-mobile');
+                }
+
+                hash = hash || '#welcome'; 
+                navItems.forEach(item => {
+                    item.classList.toggle('active', item.getAttribute('href') === hash);
+                });
+                pageViews.forEach(view => {
+                    view.classList.toggle('hidden', view.id !== hash.substring(1));
+                });
+            }
+
+            window.addEventListener('hashchange', () => switchView(window.location.hash));
+            navItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const hash = item.getAttribute('href');
+                    if(window.location.hash !== hash) {
+                        window.location.hash = hash;
+                    } 
+                    switchView(hash);
+                });
+            });
+            
+            // Ensure the correct view is shown on load 
+            switchView(window.location.hash || '#welcome');
+
+
+            // --- Design Tool Initializers ---
+
+            // 1. Color Palette Generator
+            function initializePaletteTool() {
+                const generatePaletteBtn = document.getElementById('generate-palette-btn');
+                const paletteContainer = document.getElementById('palette-container');
+
+                function generateRandomColor() {
+                    return '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+                }
+
+                function generatePalette() {
+                    paletteContainer.innerHTML = '';
+                    for (let i = 0; i < 5; i++) {
+                        const color = generateRandomColor();
+                        const swatch = document.createElement('div');
+                        swatch.className = 'text-center';
+                        swatch.innerHTML = `
+                            <div class="color-swatch h-24 md:h-32 rounded-xl shadow-lg cursor-pointer border-2 border-gray-100" 
+                                 style="background-color: ${color}" data-color="${color}" title="Click to copy"></div>
+                            <p class="mt-3 text-sm font-medium text-gray-700">${color.toUpperCase()}</p>
+                        `;
+                        swatch.querySelector('div').addEventListener('click', () => {
+                            copyToClipboard(color);
+                        });
+                        paletteContainer.appendChild(swatch);
+                    }
+                }
+                generatePaletteBtn.addEventListener('click', generatePalette);
+                generatePalette(); 
+            }
+
+            // 2. Shadow Customizer
+            function initializeShadowTool() {
+                const xSlider = document.getElementById('shadow-x');
+                const ySlider = document.getElementById('shadow-y');
+                const blurSlider = document.getElementById('shadow-blur');
+                const spreadSlider = document.getElementById('shadow-spread');
+                const previewElement = document.getElementById('shadow-preview');
+                const cssOutput = document.getElementById('shadow-css-output');
+                const tailwindOutput = document.getElementById('shadow-tailwind-output');
+                const copyButtons = document.querySelectorAll('.copy-code-btn');
+                
+                function updateShadow() {
+                    const x = xSlider.value;
+                    const y = ySlider.value;
+                    const blur = blurSlider.value;
+                    const spread = spreadSlider.value;
+                    
+                    document.getElementById('shadow-x-val').textContent = x;
+                    document.getElementById('shadow-y-val').textContent = y;
+                    document.getElementById('shadow-blur-val').textContent = blur;
+                    document.getElementById('shadow-spread-val').textContent = spread;
+
+                    // Standard CSS (using a fixed 0.1 alpha black for simplicity)
+                    const cssValue = `${x}px ${y}px ${blur}px ${spread}px rgba(0, 0, 0, 0.15)`;
+                    
+                    // Tailwind Utility Class format: shadow-[offset_offset_blur_spread_color]
+                    // Replace spaces with underscores for Tailwind JIT compatibility
+                    const tailwindValue = `shadow-[${x}px_${y}px_${blur}px_${spread}px_rgba(0,0,0,0.15)]`;
+
+                    // Apply to preview
+                    previewElement.style.boxShadow = cssValue;
+                    
+                    // Update outputs
+                    cssOutput.textContent = `box-shadow: ${cssValue};`;
+                    tailwindOutput.textContent = tailwindValue;
+                }
+
+                [xSlider, ySlider, blurSlider, spreadSlider].forEach(slider => {
+                    slider.addEventListener('input', updateShadow);
+                });
+
+                copyButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const targetId = button.dataset.target;
+                        const targetElement = document.getElementById(targetId);
+                        if (targetElement) {
+                            copyToClipboard(targetElement.textContent.trim());
+                        }
+                    });
+                });
+
+                // Initial run
+                updateShadow();
+            }
+
+            // --- Modal Control Functions ---
+            function openModal(container) {
+                currentOutputContainer = container;
+                improvementModal.classList.remove('opacity-0', 'pointer-events-none');
+                improvementModal.classList.add('open');
+                improvementTextarea.focus();
+            }
+
+            function closeModal() {
+                improvementModal.classList.add('opacity-0', 'pointer-events-none');
+                improvementModal.classList.remove('open');
+                improvementTextarea.value = '';
+                currentOutputContainer = null;
+            }
+
+            closeBtn.addEventListener('click', closeModal);
+            cancelBtn.addEventListener('click', closeModal);
+            // Close modal on outside click
+            improvementModal.addEventListener('click', (e) => {
+                if (e.target === improvementModal) {
+                    closeModal();
+                }
+            });
+
+
+            // --- Core Gemini API Logic ---
+            async function generateWithGemini(userQuery, systemPrompt, outputContainer) {
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+                
+                // CRITICAL FIX FOR TypeError: Ensure outputContainer is a valid DOM element
+                if (!outputContainer) {
+                    console.error("Error: The output container is missing. Cannot proceed with generation.");
+                    return; 
+                }
+
+                const payload = {
+                    contents: [{ parts: [{ text: userQuery }] }],
+                    
+                    // Use Google Search grounding for real-world context and up-to-date information (like font availability)
+                    tools: [{ "google_search": {} }], 
+
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                };
+
+                let retries = 3;
+                let delay = 1000;
+                let response;
+
+                // Safely determine the generate button
+                const toolContainer = outputContainer.closest('.ai-tool-container');
+                let generateBtn = null;
+
+                if (toolContainer) {
+                    generateBtn = toolContainer.querySelector('.generate-btn');
+                }
+                
+                // Only attempt to disable/re-enable the button if it was found
+                if (generateBtn) {
+                    generateBtn.disabled = true;
+                    generateBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                }
+
+                // Show loader
+                outputContainer.innerHTML = '<div class="flex items-center justify-center py-10"><div class="loader"></div><p class="ml-4 text-gray-500">Generating ideas...</p></div>';
+
+                try {
+                    while(retries > 0) {
+                        try {
+                            response = await fetch(apiUrl, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(payload)
+                            });
+
+                            if (response.ok) {
+                                const result = await response.json();
+                                const candidate = result.candidates?.[0];
+                                if (candidate && candidate.content?.parts?.[0]?.text) {
+                                    return candidate.content.parts[0].text;
+                                } else {
+                                    const feedback = result.candidates?.[0]?.safetyRatings?.[0]?.blockReason || 'Empty or invalid response.';
+                                    throw new Error(`API Response Issue: ${feedback}`);
+                                }
+                            } else {
+                                throw new Error(`API request failed with status ${response.status}`);
+                            }
+
+                        } catch(error) {
+                            console.error(`Attempt failed: ${error.message}. Retrying in ${delay}ms...`);
+                            retries--;
+                            if (retries === 0) throw error;
+                            await new Promise(res => setTimeout(res, delay));
+                            delay *= 2; 
+                        }
+                    }
+                } catch (error) {
+                    outputContainer.innerHTML = `<div class="bg-red-50 border-l-4 border-red-400 p-4 rounded-lg shadow-inner text-red-700">
+                            <strong>Generation Failed:</strong> ${error.message}.
+                            <p class="text-sm mt-1 text-red-600">Please refine your prompt and try again.</p>
+                        </div>`;
+                } finally {
+                    // Re-enable button if it was found
+                    if (generateBtn) {
+                        generateBtn.disabled = false;
+                        generateBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    }
+                }
+            }
+            
+            // Basic markdown to HTML conversion
+            function markdownToHtml(text) {
+                // 1. Convert headers, blockquotes, bold/italic, inline code
+                let html = text
+                    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+                    .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+                    .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>')
+                    .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
+                    .replace(/\*(.*)\*/gim, '<em>$1</em>')
+                    .replace(/`(.*?)`/gim, '<code>$1</code>');
+
+                // 2. Handle paragraphs and lists using a simple state machine
+                const lines = html.split('\n');
+                let output = [];
+                let inList = false;
+                let listType = ''; // 'ul' or 'ol'
+                
+                lines.forEach(line => {
+                    const trimmedLine = line.trim();
+                    
+                    // Ignore empty lines, but use them to break lists
+                    if (trimmedLine.length === 0) {
+                        if (inList) {
+                            output.push(`</${listType}>`);
+                            inList = false;
+                            listType = '';
+                        }
+                        return;
+                    }
+
+                    // Check for Unordered List item
+                    if (trimmedLine.match(/^[\*-] /)) {
+                        if (!inList || listType !== 'ul') {
+                            if (inList) output.push(`</${listType}>`);
+                            listType = 'ul';
+                            output.push('<ul>');
+                        }
+                        output.push(`<li>${trimmedLine.replace(/^[\*-]\s*/, '').trim()}</li>`);
+                        inList = true;
+                        return;
+                    }
+                    
+                    // Check for Ordered List item
+                    if (trimmedLine.match(/^\d+\. /)) {
+                         if (!inList || listType !== 'ol') {
+                            if (inList) output.push(`</${listType}>`);
+                            listType = 'ol';
+                            output.push('<ol>');
+                        }
+                        output.push(`<li>${trimmedLine.replace(/^\d+\.\s*/, '').trim()}</li>`);
+                        inList = true;
+                        return;
+                    }
+
+                    // If not a list item, close any open list
+                    if (inList) {
+                        output.push(`</${listType}>`);
+                        inList = false;
+                        listType = '';
+                    }
+
+                    // Handle other elements (headers, blockquotes, code blocks, or simple paragraphs)
+                    // Check if the line already contains a complex block tag
+                    if (!line.match(/<h[1-3]>|<blockquote|<pre/i)) {
+                        output.push(`<p>${trimmedLine}</p>`);
+                    } else {
+                        output.push(line);
+                    }
+                });
+
+                // Close any list left open at the end
+                if (inList) {
+                    output.push(`</${listType}>`);
+                }
+
+                return output.join('');
+            }
+
+            // --- Rendering the AI Output with Feedback Bar ---
+            function renderAIOutput(outputContainer, result, originalPrompt) {
+                outputContainer.dataset.lastPrompt = originalPrompt;
+
+                const formattedResult = markdownToHtml(result);
+                outputContainer.innerHTML = `
+                    <div class="ai-output mb-6 border-b border-gray-100 pb-6">
+                        ${formattedResult}
+                    </div>
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <span class="text-sm text-gray-500">How was this response?</span>
+                        <div class="flex gap-3">
+                            <button class="feedback-btn like-btn flex items-center gap-2 p-2 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-600 transition-colors border border-gray-200" data-feedback="like">
+                                <i data-lucide="thumbs-up" class="w-5 h-5"></i>
+                                <span class="hidden sm:inline">Like</span>
+                            </button>
+                            <button class="feedback-btn dislike-btn flex items-center gap-2 p-2 rounded-lg text-gray-600 hover:bg-red-50 hover:text-red-600 transition-colors border border-gray-200" data-feedback="dislike">
+                                <i data-lucide="thumbs-down" class="w-5 h-5"></i>
+                                <span class="hidden sm:inline">Dislike</span>
+                            </button>
+                            <button class="improve-btn flex items-center gap-2 px-4 py-2 rounded-lg bg-violet-100 text-violet-700 hover:bg-violet-200 transition-colors font-medium border border-violet-300">
+                                <i data-lucide="wand-2" class="w-4 h-4"></i>
+                                Improve Response
+                            </button>
+                        </div>
+                    </div>
+                `;
+                lucide.createIcons(); // Re-render new icons
+            }
+            
+            // --- Improvement Submission Logic ---
+            submitImprovementBtn.addEventListener('click', async () => {
+                const improvementText = improvementTextarea.value.trim();
+                const originalPrompt = currentOutputContainer.dataset.lastPrompt;
+                const toolType = currentOutputContainer.dataset.toolType;
+                
+                closeModal();
+
+                if (!improvementText || !originalPrompt) {
+                    showToast("Cannot improve: Missing previous prompt or improvement text.", 'error');
+                    return;
+                }
+
+                // Construct the new, iterative prompt
+                const newPrompt = `Based on the original request: "${originalPrompt}", please re-generate the response with the following specific changes: ${improvementText}`;
+                
+                const systemPrompt = systemInstructions[toolType];
+                const result = await generateWithGemini(newPrompt, systemPrompt, currentOutputContainer);
+
+                if (result) {
+                    renderAIOutput(currentOutputContainer, result, originalPrompt); // Keep original prompt for continuity
+                    showToast("Response successfully improved!");
+                }
+            });
+
+            // --- Attach Event Listeners to Tools ---
+            function initializeAITools() {
+                 aiToolContainers.forEach(container => {
+                    const generateBtn = container.querySelector('.generate-btn');
+                    const textarea = container.querySelector('textarea');
+                    const outputContainer = container.querySelector('.output-container');
+                    const toolType = container.dataset.tool;
+
+                    // 1. Primary Generation Button
+                    generateBtn.addEventListener('click', async () => {
+                        const prompt = textarea.value.trim();
+                        if (!prompt) {
+                            outputContainer.innerHTML = '<p class="text-red-500 font-semibold">🛑 Please enter a prompt before generating content.</p>';
+                            return;
+                        }
+                        
+                        const systemPrompt = systemInstructions[toolType];
+                        const result = await generateWithGemini(prompt, systemPrompt, outputContainer);
+
+                        if (result) {
+                            renderAIOutput(outputContainer, result, prompt);
+                        }
+                    });
+
+                    // 2. Event Delegation for Feedback Bar (Must attach to the parent container)
+                    outputContainer.addEventListener('click', (e) => {
+                        const target = e.target.closest('.feedback-btn, .improve-btn');
+                        if (!target) return;
+
+                        // Handle Like/Dislike
+                        if (target.classList.contains('feedback-btn')) {
+                            const feedbackType = target.dataset.feedback;
+                            // In a real app, this would send data to a logging/analytics backend.
+                            showToast(`Thanks for the ${feedbackType} feedback! We'll use this to improve.`);
+                        }
+
+                        // Handle Improve Button
+                        if (target.classList.contains('improve-btn')) {
+                            openModal(outputContainer);
+                        }
+                    });
+                });
+            }
+
+            // Initialize all features
+            initializePaletteTool();
+            initializeShadowTool();
+            initializeAITools();
+        }
+    </script>
+
+</body>
+</html>
