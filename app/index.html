@@ -48,6 +48,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease-in-out;
             z-index: 50;
+            width: 280px;
         }
         .sidebar.hidden-mobile {
             transform: translateX(-100%);
@@ -238,18 +239,210 @@
             color: #dc2626;
             border-color: #fecaca;
         }
+
+        /* Improved layout for PC screens */
+        .main-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .main-content {
+            flex: 1;
+            margin-left: 0;
+            transition: margin-left 0.3s ease;
+        }
+        
+        @media (min-width: 768px) {
+            .main-content {
+                margin-left: 280px;
+            }
+        }
+        
+        /* Grid improvements for PC */
+        .grid-responsive {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        }
+        
+        @media (min-width: 1024px) {
+            .grid-responsive {
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            }
+        }
+        
+        @media (min-width: 1280px) {
+            .grid-responsive {
+                grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            }
+        }
+        
+        /* Improved shadow customizer for PC */
+        @media (min-width: 768px) {
+            .shadow-controls-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .shadow-controls-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        /* Better card spacing for PC */
+        .card-spacing {
+            margin-bottom: 2rem;
+        }
+        
+        @media (min-width: 768px) {
+            .card-spacing {
+                margin-bottom: 2.5rem;
+            }
+        }
+        
+        /* Improved typography for larger screens */
+        @media (min-width: 1024px) {
+            .page-title {
+                font-size: 3rem;
+            }
+            
+            .page-subtitle {
+                font-size: 1.25rem;
+            }
+        }
+
+        /* Splash Screen Styles */
+        #splash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fefefe;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: float 6s ease-in-out infinite alternate;
+        }
+
+        .bg-circle.one { width: 300px; height: 300px; background: #ff7eb9; top: 20%; left: 10%; }
+        .bg-circle.two { width: 250px; height: 250px; background: #ffb36d; top: 50%; left: 60%; animation-duration: 8s; }
+        .bg-circle.three { width: 200px; height: 200px; background: #7ae7ff; top: 70%; left: 30%; animation-duration: 7s; }
+
+        @keyframes float { 0% { transform: translateY(0) translateX(0);} 100% { transform: translateY(-40px) translateX(30px);} }
+
+        .splash-content {
+            position: relative;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .logo { width: 120px; animation: logo-pop 1s ease-out forwards; opacity: 0; }
+        .logo-text { margin-top: 20px; font-size: 2em; font-weight: bold; color: #333; letter-spacing: 1px; opacity: 0; animation: text-fade 1s ease-out forwards; animation-delay: 0.5s; }
+
+        @keyframes logo-pop { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes text-fade { 0% { opacity: 0; } 100% { opacity: 1; } }
+
+        /* Blurry backgrounds for app sections */
+        .blurry-bg {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blurry-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: inherit;
+            filter: blur(20px);
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        .blurry-bg-light::before {
+            filter: blur(15px);
+            opacity: 0.5;
+        }
+
+        .blurry-bg-strong::before {
+            filter: blur(30px);
+            opacity: 0.8;
+        }
+
+        /* Welcome section with blurry background */
+        .welcome-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            z-index: -1;
+        }
+
+        .welcome-bg-circle.one { width: 400px; height: 400px; background: #ff7eb9; top: -100px; left: -100px; }
+        .welcome-bg-circle.two { width: 300px; height: 300px; background: #7ae7ff; bottom: -100px; right: -50px; }
+        .welcome-bg-circle.three { width: 250px; height: 250px; background: #ffb36d; top: 50%; left: 60%; }
+
+        /* Card with blurry background effect */
+        .card-blurry {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-blurry::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: inherit;
+            filter: blur(15px);
+            z-index: -1;
+            opacity: 0.6;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
 
-    <div class="flex flex-col min-h-screen">
+    <!-- Splash Screen -->
+    <div id="splash">
+        <div class="bg-circle one"></div>
+        <div class="bg-circle two"></div>
+        <div class="bg-circle three"></div>
+        <div class="splash-content">
+            <img src="https://aditya-cmd-max.github.io/exonovaai/logo.png" alt="Clover Studio Logo" class="logo">
+            <div class="logo-text">Clover Studio</div>
+        </div>
+    </div>
+
+    <div class="main-container" id="main-content" style="display:none;">
         <!-- Mobile Menu Toggle Button -->
         <button id="menu-toggle" class="md:hidden fixed top-6 left-6 z-50 p-3 rounded-full bg-white shadow-xl text-gray-800 focus:outline-none focus:ring-4 focus:ring-violet-200 transition-all duration-300">
             <i data-lucide="menu"></i>
         </button>
 
         <!-- Sidebar -->
-        <aside id="sidebar" class="sidebar fixed inset-y-0 left-0 w-72 flex-shrink-0 p-8 flex flex-col justify-between hidden-mobile md:static">
+        <aside id="sidebar" class="sidebar fixed inset-y-0 left-0 flex-shrink-0 p-8 flex flex-col justify-between hidden-mobile">
             <div>
                 <div class="flex items-center gap-3 mb-12">
                     <div class="w-12 h-12 rounded-xl flex items-center justify-center">
@@ -296,14 +489,18 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 p-8 md:p-12 overflow-y-auto">
+        <main class="main-content p-6 md:p-8 lg:p-12 overflow-y-auto">
             
             <!-- Welcome View -->
-            <div id="welcome" class="page-view h-full flex flex-col items-center justify-center text-center">
-                <div class="max-w-2xl">
-                    <h2 class="text-5xl md:text-6xl font-extrabold text-gray-900 tracking-tight mb-6">Your Ideas, <span class="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">Designed</span>.</h2>
-                    <p class="mt-4 text-xl text-gray-600 mb-10">Start a project by selecting a creative tool from the sidebar. Your next masterpiece awaits!</p>
-                     <div class="card p-8 max-w-md mx-auto">
+            <div id="welcome" class="page-view h-full flex flex-col items-center justify-center text-center welcome-container">
+                <div class="welcome-bg-circle one"></div>
+                <div class="welcome-bg-circle two"></div>
+                <div class="welcome-bg-circle three"></div>
+                
+                <div class="max-w-4xl">
+                    <h2 class="page-title text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight mb-6">Your Ideas, <span class="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">Designed</span>.</h2>
+                    <p class="page-subtitle mt-4 text-lg md:text-xl text-gray-600 mb-10">Start a project by selecting a creative tool from the sidebar. Your next masterpiece awaits!</p>
+                     <div class="card p-6 md:p-8 max-w-md mx-auto card-blurry">
                          <div class="flex items-center justify-center gap-3 mb-4">
                             <div class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 flex items-center justify-center">
                                 <i data-lucide="sparkles" class="text-white w-5 h-5"></i>
@@ -319,47 +516,47 @@
             </div>
 
             <!-- Design Tools View (Expanded) -->
-            <div id="design" class="page-view hidden space-y-10">
+            <div id="design" class="page-view hidden space-y-8 lg:space-y-10">
                 <div class="mb-8">
-                    <h2 class="text-4xl font-bold text-gray-900 mb-2">🎨 Design Tools</h2>
-                    <p class="text-gray-500 text-lg">Create beautiful color schemes, typography pairings, and custom shadows</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">🎨 Design Tools</h2>
+                    <p class="text-gray-500 text-base md:text-lg">Create beautiful color schemes, typography pairings, and custom shadows</p>
                 </div>
                 
                 <!-- Color Palette Generator -->
-                <div class="card p-8">
-                    <h3 class="text-2xl font-semibold mb-4 flex items-center gap-3"><i data-lucide="paint-bucket" class="w-6 h-6 text-pink-500"></i> Color Palette Generator</h3>
+                <div class="card p-6 md:p-8 card-spacing blurry-bg-light">
+                    <h3 class="text-xl md:text-2xl font-semibold mb-4 flex items-center gap-3"><i data-lucide="paint-bucket" class="w-5 h-5 md:w-6 md:h-6 text-pink-500"></i> Color Palette Generator</h3>
                     <p class="text-gray-600 mb-6">Click to generate a fresh, random color palette. Click a swatch to copy its hex code.</p>
-                    <button id="generate-palette-btn" class="btn-secondary px-6 py-3 rounded-xl font-semibold">
+                    <button id="generate-palette-btn" class="btn-secondary px-5 py-2.5 md:px-6 md:py-3 rounded-xl font-semibold">
                         <i data-lucide="refresh-cw" class="w-4 h-4 mr-2 inline-block"></i>
                         Generate Palette
                     </button>
-                    <div id="palette-container" class="mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+                    <div id="palette-container" class="mt-6 md:mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
                         <!-- Color swatches will be injected here -->
                     </div>
                 </div>
 
                 <!-- Typography Pairer (AI-Powered) -->
-                <div class="card p-8">
-                    <h3 class="text-2xl font-semibold mb-4 flex items-center gap-3"><i data-lucide="type" class="w-6 h-6 text-violet-500"></i> AI Typography Pairer</h3>
+                <div class="card p-6 md:p-8 card-spacing blurry-bg">
+                    <h3 class="text-xl md:text-2xl font-semibold mb-4 flex items-center gap-3"><i data-lucide="type" class="w-5 h-5 md:w-6 md:h-6 text-violet-500"></i> AI Typography Pairer</h3>
                     <p class="text-gray-600 mb-6">Enter a mood or purpose (e.g., "playful branding," "academic report," "minimalist portfolio") to get a perfect font combination.</p>
                     <div class="ai-tool-container" data-tool="typography">
-                        <textarea class="input-modern w-full h-20" placeholder="e.g., A font pairing for a children's book website that feels warm and readable..."></textarea>
-                        <button class="generate-btn mt-4 btn-primary px-6 py-3 rounded-xl font-semibold">
+                        <textarea class="input-modern w-full h-20 md:h-24" placeholder="e.g., A font pairing for a children's book website that feels warm and readable..."></textarea>
+                        <button class="generate-btn mt-4 btn-primary px-5 py-2.5 md:px-6 md:py-3 rounded-xl font-semibold">
                             <i data-lucide="sparkles" class="w-4 h-4 mr-2 inline-block"></i>
                             Suggest Fonts
                         </button>
-                        <div class="output-container mt-8 bg-gray-50 p-6 rounded-xl border border-gray-200 min-h-[100px] text-left" data-last-prompt="" data-tool-type="typography">
+                        <div class="output-container mt-6 md:mt-8 bg-gray-50 p-4 md:p-6 rounded-xl border border-gray-200 min-h-[100px] text-left" data-last-prompt="" data-tool-type="typography">
                             <p class="text-gray-500 italic">Font suggestions will appear here.</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Tailwind Shadow Customizer (Utility) -->
-                <div class="card p-8">
-                    <h3 class="text-2xl font-semibold mb-4 flex items-center gap-3"><i data-lucide="box" class="w-6 h-6 text-blue-500"></i> Tailwind Shadow Customizer</h3>
+                <div class="card p-6 md:p-8 card-spacing blurry-bg-strong">
+                    <h3 class="text-xl md:text-2xl font-semibold mb-4 flex items-center gap-3"><i data-lucide="box" class="w-5 h-5 md:w-6 md:h-6 text-blue-500"></i> Tailwind Shadow Customizer</h3>
                     <p class="text-gray-600 mb-6">Adjust the sliders to create a custom shadow effect and copy the resulting CSS and Tailwind utility classes.</p>
 
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                    <div class="shadow-controls-grid mb-6 md:mb-8">
                         <div>
                             <label for="shadow-x" class="block text-sm font-medium text-gray-700 mb-2">X Offset (px)</label>
                             <input type="range" id="shadow-x" min="-20" max="20" value="0" class="w-full">
@@ -406,16 +603,16 @@
             <!-- Content Creator View -->
             <div id="content" class="page-view hidden">
                  <div class="mb-8">
-                    <h2 class="text-4xl font-bold text-gray-900 mb-2">✍️ Content Creator</h2>
-                    <p class="text-gray-500 text-lg">Generate blog posts, ad copy, social media captions, and more.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">✍️ Content Creator</h2>
+                    <p class="text-gray-500 text-base md:text-lg">Generate blog posts, ad copy, social media captions, and more.</p>
                  </div>
-                 <div class="ai-tool-container" data-tool="content">
-                    <textarea class="input-modern w-full h-32" placeholder="e.g., Write a 500-word persuasive blog post about the environmental benefits of using recycled materials..."></textarea>
-                    <button class="generate-btn mt-4 btn-primary px-6 py-3 rounded-xl font-semibold">
+                 <div class="ai-tool-container blurry-bg" data-tool="content">
+                    <textarea class="input-modern w-full h-32 md:h-40" placeholder="e.g., Write a 500-word persuasive blog post about the environmental benefits of using recycled materials..."></textarea>
+                    <button class="generate-btn mt-4 btn-primary px-5 py-2.5 md:px-6 md:py-3 rounded-xl font-semibold">
                         <i data-lucide="zap" class="w-4 h-4 mr-2 inline-block"></i>
                         Generate Content
                     </button>
-                    <div class="output-container mt-8 card p-8 min-h-[200px] text-left" data-last-prompt="" data-tool-type="content">
+                    <div class="output-container mt-6 md:mt-8 card p-6 md:p-8 min-h-[200px] text-left" data-last-prompt="" data-tool-type="content">
                         <p class="text-gray-500 italic">Your generated content will appear here.</p>
                     </div>
                  </div>
@@ -424,16 +621,16 @@
             <!-- AI Brainstormer View -->
             <div id="brainstorm" class="page-view hidden">
                 <div class="mb-8">
-                    <h2 class="text-4xl font-bold text-gray-900 mb-2">🧠 AI Brainstormer</h2>
-                    <p class="text-gray-500 text-lg">Get unstuck with unique ideas for any topic, marketing campaign, or project name.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">🧠 AI Brainstormer</h2>
+                    <p class="text-gray-500 text-base md:text-lg">Get unstuck with unique ideas for any topic, marketing campaign, or project name.</p>
                 </div>
-                 <div class="ai-tool-container" data-tool="brainstorm">
-                    <textarea class="input-modern w-full h-32" placeholder="e.g., Brainstorm 10 catchy, eco-friendly names for a sustainable fashion brand..."></textarea>
-                    <button class="generate-btn mt-4 btn-primary px-6 py-3 rounded-xl font-semibold">
+                 <div class="ai-tool-container blurry-bg-light" data-tool="brainstorm">
+                    <textarea class="input-modern w-full h-32 md:h-40" placeholder="e.g., Brainstorm 10 catchy, eco-friendly names for a sustainable fashion brand..."></textarea>
+                    <button class="generate-btn mt-4 btn-primary px-5 py-2.5 md:px-6 md:py-3 rounded-xl font-semibold">
                         <i data-lucide="zap" class="w-4 h-4 mr-2 inline-block"></i>
                         Generate Ideas
                     </button>
-                    <div class="output-container mt-8 card p-8 min-h-[200px] text-left" data-last-prompt="" data-tool-type="brainstorm">
+                    <div class="output-container mt-6 md:mt-8 card p-6 md:p-8 min-h-[200px] text-left" data-last-prompt="" data-tool-type="brainstorm">
                         <p class="text-gray-500 italic">Your generated ideas will appear here.</p>
                     </div>
                  </div>
@@ -442,16 +639,16 @@
             <!-- Media Idea Generator View -->
             <div id="media" class="page-view hidden">
                 <div class="mb-8">
-                    <h2 class="text-4xl font-bold text-gray-900 mb-2">🎧 Music & Video Idea Generator</h2>
-                    <p class="text-gray-500 text-lg">Find inspiration for your next audio or visual project.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">🎧 Music & Video Idea Generator</h2>
+                    <p class="text-gray-500 text-base md:text-lg">Find inspiration for your next audio or visual project.</p>
                 </div>
-                <div class="ai-tool-container" data-tool="media">
-                    <textarea class="input-modern w-full h-32" placeholder="e.g., Give me 5 creative ideas for a short film set entirely within a futuristic subway car."></textarea>
-                    <button class="generate-btn mt-4 btn-primary px-6 py-3 rounded-xl font-semibold">
+                <div class="ai-tool-container blurry-bg" data-tool="media">
+                    <textarea class="input-modern w-full h-32 md:h-40" placeholder="e.g., Give me 5 creative ideas for a short film set entirely within a futuristic subway car."></textarea>
+                    <button class="generate-btn mt-4 btn-primary px-5 py-2.5 md:px-6 md:py-3 rounded-xl font-semibold">
                         <i data-lucide="zap" class="w-4 h-4 mr-2 inline-block"></i>
                         Generate Concepts
                     </button>
-                    <div class="output-container mt-8 card p-8 min-h-[200px] text-left" data-last-prompt="" data-tool-type="media">
+                    <div class="output-container mt-6 md:mt-8 card p-6 md:p-8 min-h-[200px] text-left" data-last-prompt="" data-tool-type="media">
                         <p class="text-gray-500 italic">Your generated concepts will appear here.</p>
                     </div>
                 </div>
@@ -460,50 +657,50 @@
             <!-- Design Critique View -->
             <div id="critique" class="page-view hidden">
                 <div class="mb-8">
-                    <h2 class="text-4xl font-bold text-gray-900 mb-2">🔍 Design Critique & Polish</h2>
-                    <p class="text-gray-500 text-lg">Paste your design concept, copy, or pitch below to get instant, expert-level feedback on clarity, tone, and visual impact.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">🔍 Design Critique & Polish</h2>
+                    <p class="text-gray-500 text-base md:text-lg">Paste your design concept, copy, or pitch below to get instant, expert-level feedback on clarity, tone, and visual impact.</p>
                 </div>
-                <div class="ai-tool-container" data-tool="critique">
-                    <textarea class="input-modern w-full h-32" placeholder="e.g., Critique this marketing copy: 'Our new product is fast, reliable, and cheap. Buy it today!'"></textarea>
-                    <button class="generate-btn mt-4 btn-primary px-6 py-3 rounded-xl font-semibold">
+                <div class="ai-tool-container blurry-bg-strong" data-tool="critique">
+                    <textarea class="input-modern w-full h-32 md:h-40" placeholder="e.g., Critique this marketing copy: 'Our new product is fast, reliable, and cheap. Buy it today!'"></textarea>
+                    <button class="generate-btn mt-4 btn-primary px-5 py-2.5 md:px-6 md:py-3 rounded-xl font-semibold">
                         <i data-lucide="scan-text" class="w-4 h-4 mr-2 inline-block"></i>
                         Get Critique ✨
                     </button>
-                    <div class="output-container mt-8 card p-8 min-h-[200px] text-left" data-last-prompt="" data-tool-type="critique">
+                    <div class="output-container mt-6 md:mt-8 card p-6 md:p-8 min-h-[200px] text-left" data-last-prompt="" data-tool-type="critique">
                         <p class="text-gray-500 italic">The AI Art Director will provide feedback here.</p>
                     </div>
                 </div>
             </div>
         </main>
+    </div>
 
-        <!-- Footer -->
-        <footer class="footer py-6 px-8 text-center">
-            <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-600 mb-4 md:mb-0">Made with ❤ by Aditya Jha</p>
-                <p class="text-gray-600">Powered by Exonova</p>
-            </div>
-        </footer>
-
-        <!-- Custom Toast Notification Container -->
-        <div id="toast-container" class="fixed bottom-5 right-5 z-[100] space-y-3">
-            <!-- Toasts will be dynamically added here -->
+    <!-- Footer -->
+    <footer class="footer py-6 px-8 text-center">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
+            <p class="text-gray-600 mb-4 md:mb-0">Made with ❤ by Aditya Jha</p>
+            <p class="text-gray-600">Powered by Exonova</p>
         </div>
+    </footer>
+
+    <!-- Custom Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-[100] space-y-3">
+        <!-- Toasts will be dynamically added here -->
     </div>
 
     <!-- Improvement Modal/Popup Structure -->
     <div id="improvement-modal" class="modal fixed inset-0 flex items-center justify-center opacity-0 pointer-events-none z-[60]">
-        <div class="modal-content card p-8 w-full max-w-lg mx-4">
+        <div class="modal-content card p-6 md:p-8 w-full max-w-lg mx-4 blurry-bg">
             <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-bold text-gray-800">Refine Your Response</h3>
+                <h3 class="text-xl md:text-2xl font-bold text-gray-800">Refine Your Response</h3>
                 <button id="close-modal-btn" class="text-gray-400 hover:text-gray-600 transition-colors">
-                    <i data-lucide="x" class="w-6 h-6"></i>
+                    <i data-lucide="x" class="w-5 h-5 md:w-6 md:h-6"></i>
                 </button>
             </div>
             <p class="text-gray-600 mb-4">What changes would you like to make to the previous result? (e.g., "Make it shorter," "Use a playful tone," or "Add more examples.")</p>
             <textarea id="improvement-prompt-textarea" class="input-modern w-full h-32" placeholder="I need the tone to be more academic and include two citation examples..."></textarea>
             <div class="mt-6 flex justify-end gap-3">
-                <button id="cancel-improvement-btn" class="px-6 py-2 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors">Cancel</button>
-                <button id="submit-improvement-btn" class="btn-primary px-6 py-2 rounded-xl font-semibold">
+                <button id="cancel-improvement-btn" class="px-5 py-2 md:px-6 md:py-2 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors">Cancel</button>
+                <button id="submit-improvement-btn" class="btn-primary px-5 py-2 md:px-6 md:py-2 rounded-xl font-semibold">
                     <i data-lucide="sparkles" class="w-4 h-4 mr-2 inline-block"></i>
                     Improve Now
                 </button>
@@ -522,7 +719,22 @@
             typography: "You are a typographer and graphic designer. Based on the user's requested mood or purpose, suggest a primary heading font and a secondary body font that pair well. Provide a brief explanation for the pairing and mention where the fonts can be sourced (e.g., Google Fonts, Adobe Fonts, or standard system fonts). Structure the output using markdown headers and lists.Never use weirds look like continuous ----- or |----| or *** for bold or ## or anything... just answer clearly bold the text with <b> and italic from <i> or underline from <u>"
         };
 
-        document.addEventListener('DOMContentLoaded', () => {
+        // Hide splash and show main content
+        setTimeout(() => {
+            const splash = document.getElementById('splash');
+            const main = document.getElementById('main-content');
+            splash.style.transition = "opacity 0.5s";
+            splash.style.opacity = 0;
+            setTimeout(() => {
+                splash.style.display = "none";
+                main.style.display = "flex";
+                
+                // Initialize the app after splash screen is hidden
+                initializeApp();
+            }, 500);
+        }, 2500); // Display splash for 2.5 seconds
+
+        function initializeApp() {
             // --- Lucide Icons (Replaces Feather) ---
             lucide.createIcons();
 
@@ -1017,7 +1229,7 @@
             initializePaletteTool();
             initializeShadowTool();
             initializeAITools();
-        });
+        }
     </script>
 
 </body>
