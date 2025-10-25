@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clover Lotus Studio</title>
+    <title>Clover Studio</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -11,7 +11,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -19,15 +19,15 @@
     <link rel="icon" type="image/png" href="https://aditya-cmd-max.github.io/exonova-/cloverlogo.png">
 
     <style>
-        /* Base Styling - Modern gradient background */
+        /* Base Styling - Soft gradient background */
         body {
-            font-family: 'Inter', 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
-            color: #1F2937;
+            font-family: 'Nunito', 'Inter', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            color: #334155;
             overflow-x: hidden;
         }
 
-        /* Modern color palette */
+        /* Soft color palette */
         :root {
             --color-primary: #8B5CF6;
             --color-primary-light: #a78bfa;
@@ -41,10 +41,10 @@
         
         /* Glassmorphism for Sidebar */
         .sidebar {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-right: 1px solid rgba(255, 255, 255, 0.3);
+            border-right: 1px solid rgba(255, 255, 255, 0.4);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease-in-out;
             z-index: 50;
@@ -63,7 +63,7 @@
             background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
             color: white;
             font-weight: 600;
-            box-shadow: 0 5px 15px -5px rgba(139, 92, 246, 0.5);
+            box-shadow: 0 5px 15px -5px rgba(139, 92, 246, 0.4);
         }
         .nav-item.active svg {
             stroke: white;
@@ -100,12 +100,12 @@
             background: var(--color-surface);
             border-radius: 1.5rem;
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             transition: all 0.3s ease;
         }
         .card:hover {
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
-            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08);
+            transform: translateY(-3px);
         }
         
         /* Button styling */
@@ -113,11 +113,11 @@
             background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
             color: white;
             font-weight: 600;
-            box-shadow: 0 5px 15px -5px rgba(139, 92, 246, 0.5);
+            box-shadow: 0 5px 15px -5px rgba(139, 92, 246, 0.4);
             transition: all 0.3s ease;
         }
         .btn-primary:hover {
-            box-shadow: 0 8px 20px -5px rgba(139, 92, 246, 0.7);
+            box-shadow: 0 8px 20px -5px rgba(139, 92, 246, 0.6);
             transform: translateY(-2px);
         }
         
@@ -125,11 +125,11 @@
             background: linear-gradient(135deg, var(--color-secondary), var(--color-secondary-light));
             color: white;
             font-weight: 600;
-            box-shadow: 0 5px 15px -5px rgba(236, 72, 153, 0.5);
+            box-shadow: 0 5px 15px -5px rgba(236, 72, 153, 0.4);
             transition: all 0.3s ease;
         }
         .btn-secondary:hover {
-            box-shadow: 0 8px 20px -5px rgba(236, 72, 153, 0.7);
+            box-shadow: 0 8px 20px -5px rgba(236, 72, 153, 0.6);
             transform: translateY(-2px);
         }
         
@@ -147,7 +147,7 @@
 
         /* Modal specific styles */
         .modal {
-            background-color: rgba(0, 0, 0, 0.4);
+            background-color: rgba(0, 0, 0, 0.3);
             transition: opacity 0.3s ease;
         }
         .modal-content {
@@ -177,7 +177,7 @@
         }
         .color-swatch:hover {
             transform: scale(1.05);
-            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.15);
         }
         
         /* Input styling */
@@ -190,7 +190,7 @@
         }
         .input-modern:focus {
             border-color: var(--color-primary);
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
             outline: none;
         }
         
@@ -210,13 +210,39 @@
             border-radius: 50%;
             background: var(--color-primary);
             cursor: pointer;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Footer styling */
+        .footer {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        
+        /* Like/Dislike button styles */
+        .feedback-btn {
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .feedback-btn.active {
+            transform: scale(1.1);
+        }
+        .feedback-btn.like-btn.active {
+            background-color: #dcfce7;
+            color: #16a34a;
+            border-color: #bbf7d0;
+        }
+        .feedback-btn.dislike-btn.active {
+            background-color: #fee2e2;
+            color: #dc2626;
+            border-color: #fecaca;
         }
     </style>
 </head>
 <body class="bg-gray-50">
 
-    <div class="flex h-screen relative">
+    <div class="flex flex-col min-h-screen">
         <!-- Mobile Menu Toggle Button -->
         <button id="menu-toggle" class="md:hidden fixed top-6 left-6 z-50 p-3 rounded-full bg-white shadow-xl text-gray-800 focus:outline-none focus:ring-4 focus:ring-violet-200 transition-all duration-300">
             <i data-lucide="menu"></i>
@@ -226,11 +252,10 @@
         <aside id="sidebar" class="sidebar fixed inset-y-0 left-0 w-72 flex-shrink-0 p-8 flex flex-col justify-between hidden-mobile md:static">
             <div>
                 <div class="flex items-center gap-3 mb-12">
-                 <div class="w-12 h-12 rounded-xl flex items-center justify-center">
-  <img src="https://aditya-cmd-max.github.io/exonova-/cloverlogo.png" alt="Clover Lotus Logo" class="w-full h-full object-contain" />
-</div>
-<div>
-
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center">
+                        <img src="https://aditya-cmd-max.github.io/exonova-/cloverlogo.png" alt="Clover Lotus Logo" class="w-full h-full object-contain" />
+                    </div>
+                    <div>
                         <h1 class="text-2xl font-bold text-gray-800 tracking-tight">Clover Studio</h1>
                         <p class="text-xs text-gray-500 mt-1">Creative AI Toolkit</p>
                     </div>
@@ -276,18 +301,17 @@
             <!-- Welcome View -->
             <div id="welcome" class="page-view h-full flex flex-col items-center justify-center text-center">
                 <div class="max-w-2xl">
-                    <h2 class="text-5xl md:text-6xl font-extrabold text-gray-900 tracking-tight mb-6">Your Ideas, <span class="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Designed</span>.</h2>
+                    <h2 class="text-5xl md:text-6xl font-extrabold text-gray-900 tracking-tight mb-6">Your Ideas, <span class="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">Designed</span>.</h2>
                     <p class="mt-4 text-xl text-gray-600 mb-10">Start a project by selecting a creative tool from the sidebar. Your next masterpiece awaits!</p>
                      <div class="card p-8 max-w-md mx-auto">
                          <div class="flex items-center justify-center gap-3 mb-4">
-                            <div class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 flex items-center justify-center">
                                 <i data-lucide="sparkles" class="text-white w-5 h-5"></i>
                             </div>
                             <div class="flex items-center gap-2">
-  <img src="https://aditya-cmd-max.github.io/exonova-/exonova-logo.png" alt="Exonova Logo" class="w-6 h-6 object-contain">
-  <p class="font-bold text-gray-700 text-lg">Powered by Exonova</p>
-</div>
-
+                                <img src="https://aditya-cmd-max.github.io/exonova-/exonova-logo.png" alt="Exonova Logo" class="w-6 h-6 object-contain">
+                                <p class="font-bold text-gray-700 text-lg">Powered by Exonova</p>
+                            </div>
                          </div>
                          <p class="text-gray-500 text-sm">Use detailed, descriptive prompts to guide the AI to the perfect result.</p>
                      </div>
@@ -452,6 +476,14 @@
             </div>
         </main>
 
+        <!-- Footer -->
+        <footer class="footer py-6 px-8 text-center">
+            <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-600 mb-4 md:mb-0">Made with ❤ by Aditya Jha</p>
+                <p class="text-gray-600">Powered by Exonova</p>
+            </div>
+        </footer>
+
         <!-- Custom Toast Notification Container -->
         <div id="toast-container" class="fixed bottom-5 right-5 z-[100] space-y-3">
             <!-- Toasts will be dynamically added here -->
@@ -479,74 +511,20 @@
         </div>
     </div>
 
-    <script type="module">
-        // --- MANDATORY FIREBASE/FIRESTORE IMPORTS ---
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    <script>
+        // --- Configuration ---
+        const apiKey = "AIzaSyAh4NfJ-TNNPSpZR2L3hsD5gdUyzcqZ8tc"; // You'll add your actual Gemini API key here
+        const systemInstructions = {
+            content: "You are an expert content writer and marketer. Generate clear, engaging, and well-structured content based on the user's request. Use extensive markdown for formatting including headers, lists, and paragraphs.",
+            brainstorm: "You are a world-class creative strategist. Provide a diverse range of unique, actionable, and innovative ideas based on the user's topic. Use detailed lists, bullet points, and strong headings for clarity.",
+            media: "You are a creative director for a film and music production studio. Generate compelling and imaginative concepts for videos, music, or other media. Think outside the box and use markdown for structured output.",
+            critique: "You are an experienced design and copy editor. Your role is to provide constructive, actionable, and professional critique on the user's input. Rate the design (out of 5 stars) on Clarity and Impact, then provide 3 specific areas for improvement and 3 concrete, polished alternative suggestions. Use markdown headers and lists for organization.",
+            typography: "You are a typographer and graphic designer. Based on the user's requested mood or purpose, suggest a primary heading font and a secondary body font that pair well. Provide a brief explanation for the pairing and mention where the fonts can be sourced (e.g., Google Fonts, Adobe Fonts, or standard system fonts). Structure the output using markdown headers and lists.Never use weirds look like continuous ----- or |----| or *** for bold or ## or anything... just answer clearly bold the text with <b> and italic from <i> or underline from <u>"
+        };
 
-        // --- GLOBAL FIREBASE/ENV VARS ---
-        let app;
-        let db;
-        let auth;
-        let userId = 'anonymous';
-
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-
-        document.addEventListener('DOMContentLoaded', async () => {
-            // --- FIREBASE INITIALIZATION & AUTHENTICATION (CRITICAL FIX) ---
-            if (firebaseConfig) {
-                app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-                setLogLevel('Debug'); // Enable Firestore logging
-
-                try {
-                    if (initialAuthToken) {
-                        await signInWithCustomToken(auth, initialAuthToken);
-                    } else {
-                        await signInAnonymously(auth);
-                    }
-                    console.log("Firebase Auth successful.");
-                } catch (e) {
-                    console.error("Firebase Auth failed:", e);
-                }
-
-                // Listen for Auth state changes
-                onAuthStateChanged(auth, (user) => {
-                    if (user) {
-                        userId = user.uid;
-                        console.log("User ID set:", userId);
-                    } else {
-                        userId = 'anonymous';
-                    }
-                    
-                    initializeAppLogic(); 
-                });
-
-            } else {
-                console.error("Firebase configuration is missing. Running in non-persistent mode.");
-                initializeAppLogic(); // Run logic without Firebase if config is missing
-            }
-        });
-
-
-        function initializeAppLogic() {
+        document.addEventListener('DOMContentLoaded', () => {
             // --- Lucide Icons (Replaces Feather) ---
             lucide.createIcons();
-
-            // --- Configuration ---
-            const apiKey = "AIzaSyAh4NfJ-TNNPSpZR2L3hsD5gdUyzcqZ8tc"; // You'll add your actual Gemini API key here
-            const systemInstructions = {
-                content: "You are an expert content writer and marketer. Generate clear, engaging, and well-structured content based on the user's request. Use extensive markdown for formatting including headers, lists, and paragraphs.",
-                brainstorm: "You are a world-class creative strategist. Provide a diverse range of unique, actionable, and innovative ideas based on the user's topic. Use detailed lists, bullet points, and strong headings for clarity.",
-                media: "You are a creative director for a film and music production studio. Generate compelling and imaginative concepts for videos, music, or other media. Think outside the box and use markdown for structured output.",
-                critique: "You are an experienced design and copy editor. Your role is to provide constructive, actionable, and professional critique on the user's input. Rate the design (out of 5 stars) on Clarity and Impact, then provide 3 specific areas for improvement and 3 concrete, polished alternative suggestions. Use markdown headers and lists for organization.",
-                typography: "You are a typographer and graphic designer. Based on the user's requested mood or purpose, suggest a primary heading font and a secondary body font that pair well. Provide a brief explanation for the pairing and mention where the fonts can be sourced (e.g., Google Fonts, Adobe Fonts, or standard system fonts). Structure the output using markdown headers and lists.Never use weirds look like continuous ----- or |----| or *** for bold or ## or anything... just answer clearly bold the text with <b> and italic from <i> or underline from <u>"
-            };
 
             // --- DOM Elements ---
             const sidebar = document.getElementById('sidebar');
@@ -566,14 +544,14 @@
                 const toastContainer = document.getElementById('toast-container');
                 const toast = document.createElement('div');
                 
-                let bgColor = 'bg-gradient-to-r from-purple-500 to-pink-500';
+                let bgColor = 'bg-gradient-to-r from-purple-400 to-pink-400';
                 let icon = 'check-circle';
 
                 if (type === 'error') {
-                    bgColor = 'bg-gradient-to-r from-red-500 to-pink-500';
+                    bgColor = 'bg-gradient-to-r from-red-400 to-pink-400';
                     icon = 'alert-triangle';
                 } else if (type === 'info') {
-                    bgColor = 'bg-gradient-to-r from-blue-500 to-cyan-500';
+                    bgColor = 'bg-gradient-to-r from-blue-400 to-cyan-400';
                     icon = 'info';
                 }
 
@@ -936,23 +914,52 @@
                     </div>
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                         <span class="text-sm text-gray-500">How was this response?</span>
-                        <div class="flex gap-3">
-                            <button class="feedback-btn like-btn flex items-center gap-2 p-2 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-600 transition-colors border border-gray-200" data-feedback="like">
-                                <i data-lucide="thumbs-up" class="w-5 h-5"></i>
-                                <span class="hidden sm:inline">Like</span>
+                        <div class="flex gap-2">
+                            <button class="feedback-btn like-btn flex items-center gap-1 p-2 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-600 transition-colors border border-gray-200" data-feedback="like">
+                                <i data-lucide="thumbs-up" class="w-4 h-4"></i>
+                                <span class="hidden sm:inline text-xs">Like</span>
                             </button>
-                            <button class="feedback-btn dislike-btn flex items-center gap-2 p-2 rounded-lg text-gray-600 hover:bg-red-50 hover:text-red-600 transition-colors border border-gray-200" data-feedback="dislike">
-                                <i data-lucide="thumbs-down" class="w-5 h-5"></i>
-                                <span class="hidden sm:inline">Dislike</span>
+                            <button class="feedback-btn dislike-btn flex items-center gap-1 p-2 rounded-lg text-gray-600 hover:bg-red-50 hover:text-red-600 transition-colors border border-gray-200" data-feedback="dislike">
+                                <i data-lucide="thumbs-down" class="w-4 h-4"></i>
+                                <span class="hidden sm:inline text-xs">Dislike</span>
                             </button>
-                            <button class="improve-btn flex items-center gap-2 px-4 py-2 rounded-lg bg-violet-100 text-violet-700 hover:bg-violet-200 transition-colors font-medium border border-violet-300">
+                            <button class="improve-btn flex items-center gap-2 px-3 py-2 rounded-lg bg-violet-100 text-violet-700 hover:bg-violet-200 transition-colors font-medium border border-violet-300 text-sm">
                                 <i data-lucide="wand-2" class="w-4 h-4"></i>
-                                Improve Response
+                                Improve
                             </button>
                         </div>
                     </div>
                 `;
                 lucide.createIcons(); // Re-render new icons
+                
+                // Add event listeners for the new buttons
+                const improveBtn = outputContainer.querySelector('.improve-btn');
+                if (improveBtn) {
+                    improveBtn.addEventListener('click', () => {
+                        openModal(outputContainer);
+                    });
+                }
+                
+                const feedbackBtns = outputContainer.querySelectorAll('.feedback-btn');
+                feedbackBtns.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const feedbackType = btn.dataset.feedback;
+                        
+                        // Toggle active state
+                        btn.classList.toggle('active');
+                        
+                        // If this button is now active, deactivate the other one
+                        if (btn.classList.contains('active')) {
+                            const otherBtn = btn.classList.contains('like-btn') 
+                                ? outputContainer.querySelector('.dislike-btn')
+                                : outputContainer.querySelector('.like-btn');
+                            otherBtn.classList.remove('active');
+                        }
+                        
+                        showToast(`Thanks for the ${feedbackType} feedback! We'll use this to improve.`);
+                    });
+                });
             }
             
             // --- Improvement Submission Logic ---
@@ -1003,24 +1010,6 @@
                             renderAIOutput(outputContainer, result, prompt);
                         }
                     });
-
-                    // 2. Event Delegation for Feedback Bar (Must attach to the parent container)
-                    outputContainer.addEventListener('click', (e) => {
-                        const target = e.target.closest('.feedback-btn, .improve-btn');
-                        if (!target) return;
-
-                        // Handle Like/Dislike
-                        if (target.classList.contains('feedback-btn')) {
-                            const feedbackType = target.dataset.feedback;
-                            // In a real app, this would send data to a logging/analytics backend.
-                            showToast(`Thanks for the ${feedbackType} feedback! We'll use this to improve.`);
-                        }
-
-                        // Handle Improve Button
-                        if (target.classList.contains('improve-btn')) {
-                            openModal(outputContainer);
-                        }
-                    });
                 });
             }
 
@@ -1028,7 +1017,7 @@
             initializePaletteTool();
             initializeShadowTool();
             initializeAITools();
-        }
+        });
     </script>
 
 </body>
