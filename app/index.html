@@ -152,10 +152,15 @@
         .modal {
             background-color: rgba(0, 0, 0, 0.3);
             transition: opacity 0.3s ease;
+            z-index: 100;
         }
         .modal-content {
             transform: scale(0.95);
             transition: transform 0.3s ease-out;
+        }
+        .modal.open {
+            opacity: 1;
+            pointer-events: all;
         }
         .modal.open .modal-content {
             transform: scale(1);
@@ -937,7 +942,8 @@
             media: "You are Clover AI, a creative director for a film and music production studio. Generate compelling and imaginative concepts for videos, music, or other media. Think outside the box and use markdown for structured output.",
             critique: "You are Clover AI, an experienced design and copy editor. Your role is to provide constructive, actionable, and professional critique on the user's input. Rate the design (out of 5 stars) on Clarity and Impact, then provide 3 specific areas for improvement and 3 concrete, polished alternative suggestions. Use markdown headers and lists for organization.",
             typography: "You are Clover AI, a typographer and graphic designer. Based on the user's requested mood or purpose, suggest a primary heading font and a secondary body font that pair well. Provide a brief explanation for the pairing and mention where the fonts can be sourced (e.g., Google Fonts, Adobe Fonts, or standard system fonts). Structure the output using markdown headers and lists.Never use weirds look like continuous ----- or |----| or *** for bold or ## or anything... just answer clearly bold the text with <b> and italic from <i> or underline from <u>",
-            chat: "You are Clover AI, a helpful and creative AI assistant. You are part of Clover Studio, a creative AI toolkit. Provide clear, concise, and helpful responses to the user's queries. Be friendly, creative, and engaging in your responses."
+            chat: "You are Clover AI, a helpful and creative AI assistant. You are part of Clover Studio, a creative AI toolkit. Provide clear, concise, and helpful responses to the user's queries. Be friendly, creative, and engaging in your responses.",
+            improve: "You are Clover AI. The user wants you to improve or modify a previous response. Please rewrite the content according to their specific instructions. Focus on addressing their feedback directly and providing a better version of the content."
         };
 
         // Hide splash and show main content
@@ -1616,21 +1622,29 @@
                 const originalPrompt = currentOutputContainer.dataset.lastPrompt;
                 const toolType = currentOutputContainer.dataset.toolType;
                 
-                closeModal();
-
-                if (!improvementText || !originalPrompt) {
-                    showToast("Cannot improve: Missing previous prompt or improvement text.", 'error');
+                if (!improvementText) {
+                    showToast("Please enter improvement instructions.", 'error');
                     return;
                 }
 
-                // Construct the new, iterative prompt - simply rewrite with the improvement instructions
-                const newPrompt = `Rewrite the following content with these specific improvements: ${improvementText}\n\nOriginal content request: ${originalPrompt}`;
+                if (!originalPrompt) {
+                    showToast("Cannot improve: Missing previous prompt.", 'error');
+                    return;
+                }
+
+                closeModal();
+
+                // Show loading state
+                currentOutputContainer.innerHTML = '<div class="flex items-center justify-center py-10"><div class="loader"></div><p class="ml-4 text-gray-500">Clover AI is improving your content...</p></div>';
+
+                // Construct the new, iterative prompt
+                const newPrompt = `Original request: "${originalPrompt}"\n\nNow improve this with the following changes: ${improvementText}\n\nPlease provide the improved version directly without any additional explanations.`;
                 
-                const systemPrompt = systemInstructions[toolType];
+                const systemPrompt = systemInstructions.improve;
                 const result = await generateWithGemini(newPrompt, systemPrompt, currentOutputContainer);
 
                 if (result) {
-                    renderAIOutput(currentOutputContainer, result, originalPrompt); // Keep original prompt for continuity
+                    renderAIOutput(currentOutputContainer, result, originalPrompt);
                     showToast("Response successfully improved!");
                 }
             });
@@ -1671,3 +1685,4 @@
 
 </body>
 </html>
+
