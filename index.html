@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <meta name="google-site-verification" content="gVm_Dk4QJW6bhd3nyT3WJPIzHXt9SEgn8Z43IU2t27Y" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="gVm_Dk4QJW6bhd3nyT3WJPIzHXt9SEgn8Z43IU2t27Y" />
     <title>🍀 Clover Studio - AI-Powered Creative Toolkit</title>
     
     <!-- Tailwind CSS -->
@@ -12,12 +12,12 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-        <link rel="icon" type="image/png" href="https://aditya-cmd-max.github.io/exonova-/cloverlogo.png">
+    <link rel="icon" type="image/png" href="https://aditya-cmd-max.github.io/exonova-/cloverlogo.png">
 
     <style>
         /* Base Styling */
@@ -116,41 +116,212 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+        
+        /* New Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -468px 0; }
+            100% { background-position: 468px 0; }
+        }
+        
+        .animate-fadeInUp {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .animate-fadeInLeft {
+            animation: fadeInLeft 0.8s ease-out forwards;
+        }
+        
+        .animate-fadeInRight {
+            animation: fadeInRight 0.8s ease-out forwards;
+        }
+        
+        .animate-pulse-slow {
+            animation: pulse 3s infinite ease-in-out;
+        }
+        
+        .animate-rotate-slow {
+            animation: rotate 20s infinite linear;
+        }
+        
+        .animate-shimmer {
+            animation: shimmer 2s infinite linear;
+            background: linear-gradient(to right, #f6f7f8 8%, #edeef1 18%, #f6f7f8 33%);
+            background-size: 800px 104px;
+        }
+        
+        /* Stagger animation delays */
+        .stagger-1 { animation-delay: 0.1s; opacity: 0; }
+        .stagger-2 { animation-delay: 0.2s; opacity: 0; }
+        .stagger-3 { animation-delay: 0.3s; opacity: 0; }
+        .stagger-4 { animation-delay: 0.4s; opacity: 0; }
+        .stagger-5 { animation-delay: 0.5s; opacity: 0; }
+        .stagger-6 { animation-delay: 0.6s; opacity: 0; }
+        
+        /* Particle background */
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.1));
+            animation: float 15s infinite linear;
+        }
+        
+        /* Glow effect */
+        .glow {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+        }
+        
+        /* Hover effects */
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Gradient borders */
+        .gradient-border {
+            position: relative;
+            background: white;
+            border-radius: 1.5rem;
+        }
+        
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            border-radius: 1.6rem;
+            z-index: -1;
+        }
+        
+        /* Feature icon animations */
+        .feature-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        /* Scroll progress indicator */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+            z-index: 100;
+            transition: width 0.3s ease;
+        }
+        
+        /* Parallax effect */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+    
+    <!-- Particle Background -->
+    <div class="particles-container" id="particles-container"></div>
+    
     <!-- Navigation -->
-    <nav class="glass fixed top-0 left-0 right-0 z-50 py-4">
+    <nav class="glass fixed top-0 left-0 right-0 z-50 py-4 animate-fadeInUp">
         <div class="container mx-auto px-6 flex justify-between items-center">
             <div class="flex items-center gap-3">
-              <div class="w-12 h-12 rounded-xl flex items-center justify-center">
-  <img src="https://aditya-cmd-max.github.io/exonova-/cloverlogo.png" alt="Clover Lotus Logo" class="w-full h-full object-contain" />
-</div>
-<div>
-
-                <span class="text-xl font-bold text-gray-800">Clover Studio</span>
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center animate-pulse-slow">
+                    <img src="https://aditya-cmd-max.github.io/exonova-/cloverlogo.png" alt="Clover Lotus Logo" class="w-full h-full object-contain" />
+                </div>
+                <div>
+                    <span class="text-xl font-bold text-gray-800">Clover Studio</span>
+                </div>
             </div>
             
             <div class="hidden md:flex items-center gap-8">
-                <a href="#features" class="text-gray-600 hover:text-purple-600 transition-colors font-medium">Features</a>
-                <a href="#how-it-works" class="text-gray-600 hover:text-purple-600 transition-colors font-medium">How It Works</a>
-                <a href="#testimonials" class="text-gray-600 hover:text-purple-600 transition-colors font-medium">Testimonials</a>
-                <a href="#pricing" class="text-gray-600 hover:text-purple-600 transition-colors font-medium">Pricing</a>
+                <a href="#features" class="text-gray-600 hover:text-purple-600 transition-colors font-medium hover-lift">Features</a>
+                <a href="#how-it-works" class="text-gray-600 hover:text-purple-600 transition-colors font-medium hover-lift">How It Works</a>
+                <a href="#testimonials" class="text-gray-600 hover:text-purple-600 transition-colors font-medium hover-lift">Testimonials</a>
+                <a href="#pricing" class="text-gray-600 hover:text-purple-600 transition-colors font-medium hover-lift">Pricing</a>
             </div>
             
             <div class="flex items-center gap-4">
-                <a href="#" class="text-gray-600 hover:text-purple-600 transition-colors font-medium hidden md:block">Sign In</a>
-                <a href="https://aditya-cmd-max.github.io/clover/app/" class="btn-primary px-6 py-2 rounded-xl font-semibold">Launch App</a>
+                <a href="#" class="text-gray-600 hover:text-purple-600 transition-colors font-medium hidden md:block hover-lift">Sign In</a>
+                <a href="https://aditya-cmd-max.github.io/clover/app/" class="btn-primary px-6 py-2 rounded-xl font-semibold hover-lift">Launch App</a>
             </div>
             
             <!-- Mobile menu button -->
-            <button id="mobile-menu-toggle" class="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100">
+            <button id="mobile-menu-toggle" class="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors">
                 <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </div>
         
         <!-- Mobile menu -->
-        <div id="mobile-menu" class="md:hidden absolute top-full left-0 right-0 bg-white shadow-lg rounded-b-2xl p-6 hidden">
+        <div id="mobile-menu" class="md:hidden absolute top-full left-0 right-0 bg-white shadow-lg rounded-b-2xl p-6 hidden animate-fadeInUp">
             <div class="flex flex-col gap-4">
                 <a href="#features" class="text-gray-600 hover:text-purple-600 transition-colors font-medium py-2">Features</a>
                 <a href="#how-it-works" class="text-gray-600 hover:text-purple-600 transition-colors font-medium py-2">How It Works</a>
@@ -163,26 +334,26 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="pt-32 pb-20 md:pt-40 md:pb-28 px-6">
+    <section class="pt-32 pb-20 md:pt-40 md:pb-28 px-6 relative overflow-hidden">
         <div class="container mx-auto max-w-6xl">
             <div class="flex flex-col md:flex-row items-center gap-12">
                 <div class="md:w-1/2">
-                    <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tight mb-6">
+                    <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tight mb-6 animate-fadeInUp stagger-1">
                         Your Ideas, <span class="gradient-text">Designed</span>.
                     </h1>
-                    <p class="text-xl text-gray-600 mb-8 max-w-lg">
+                    <p class="text-xl text-gray-600 mb-8 max-w-lg animate-fadeInUp stagger-2">
                         Clover Lotus Studio is an AI-powered creative toolkit that helps designers, writers, and creators bring their ideas to life with cutting-edge AI assistance.
                     </p>
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="https://aditya-cmd-max.github.io/clover/app/" class="btn-primary px-8 py-4 rounded-xl font-semibold text-lg text-center">
+                    <div class="flex flex-col sm:flex-row gap-4 animate-fadeInUp stagger-3">
+                        <a href="https://aditya-cmd-max.github.io/clover/app/" class="btn-primary px-8 py-4 rounded-xl font-semibold text-lg text-center hover-lift">
                             <i data-lucide="sparkles" class="w-5 h-5 mr-2 inline-block"></i>
                             Start Creating Now
                         </a>
-                        <a href="#features" class="px-8 py-4 rounded-xl font-semibold text-lg text-center border-2 border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors">
+                        <a href="#features" class="px-8 py-4 rounded-xl font-semibold text-lg text-center border-2 border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors hover-lift">
                             Explore Features
                         </a>
                     </div>
-                    <div class="mt-8 flex items-center gap-4 text-gray-500">
+                    <div class="mt-8 flex items-center gap-4 text-gray-500 animate-fadeInUp stagger-4">
                         <div class="flex items-center gap-2">
                             <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
                             <span>No credit card required</span>
@@ -194,11 +365,12 @@
                     </div>
                 </div>
                 <div class="md:w-1/2 relative">
-                    <div class="card p-6 floating">
+                    <div class="card p-6 floating glow">
                         <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8">
-                            <div class="flex items-center gap-3 mb-6">   <div class="w-12 h-12 rounded-xl flex items-center justify-center">
-  <img src="https://aditya-cmd-max.github.io/exonova-/cloverlogo.png" alt="Clover Lotus Logo" class="w-full h-full object-contain" />
-</div>
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="w-12 h-12 rounded-xl flex items-center justify-center animate-pulse-slow">
+                                    <img src="https://aditya-cmd-max.github.io/exonova-/cloverlogo.png" alt="Clover Lotus Logo" class="w-full h-full object-contain" />
+                                </div>
                                 <div>
                                     <h3 class="text-xl font-bold text-gray-800">Clover Studio</h3>
                                     <p class="text-sm text-gray-500">AI Creative Toolkit</p>
@@ -206,26 +378,29 @@
                             </div>
                             
                             <div class="space-y-4">
-                                <div class="flex items-center gap-3 p-3 bg-white rounded-xl shadow-sm">
+                                <div class="flex items-center gap-3 p-3 bg-white rounded-xl shadow-sm hover-lift">
                                     <i data-lucide="palette" class="w-5 h-5 text-purple-500"></i>
                                     <span class="text-gray-700">Design Tools</span>
                                 </div>
-                                <div class="flex items-center gap-3 p-3 bg-white rounded-xl shadow-sm">
+                                <div class="flex items-center gap-3 p-3 bg-white rounded-xl shadow-sm hover-lift">
                                     <i data-lucide="file-edit" class="w-5 h-5 text-pink-500"></i>
                                     <span class="text-gray-700">Content Creator</span>
                                 </div>
-                                <div class="flex items-center gap-3 p-3 bg-white rounded-xl shadow-sm">
+                                <div class="flex items-center gap-3 p-3 bg-white rounded-xl shadow-sm hover-lift">
                                     <i data-lucide="lightbulb" class="w-5 h-5 text-yellow-500"></i>
                                     <span class="text-gray-700">AI Brainstormer</span>
                                 </div>
-                                <div class="flex items-center gap-3 p-3 bg-white rounded-xl shadow-sm">
+                                <div class="flex items-center gap-3 p-3 bg-white rounded-xl shadow-sm hover-lift">
                                     <i data-lucide="scan-text" class="w-5 h-5 text-green-500"></i>
                                     <span class="text-gray-700">Design Critique</span>
                                 </div>
                             </div>
                             
-                            <div class="mt-6 p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl text-white text-center">
-                                <p class="font-bold"> <img src="https://aditya-cmd-max.github.io/exonova-/exonova-logo.png" alt="Exonova Logo" class="w-6 h-6 object-contain">Powered by Exonova</p>
+                            <div class="mt-6 p-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl text-white text-center glow">
+                                <p class="font-bold flex items-center justify-center gap-2">
+                                    <img src="https://aditya-cmd-max.github.io/exonova-/exonova-logo.png" alt="Exonova Logo" class="w-6 h-6 object-contain">
+                                    Powered by Exonova
+                                </p>
                                 <p class="text-sm opacity-90">Your creative assistant</p>
                             </div>
                         </div>
@@ -234,23 +409,24 @@
                     <!-- Floating elements -->
                     <div class="absolute -top-4 -right-4 w-24 h-24 bg-purple-100 rounded-full opacity-70 floating" style="animation-delay: 0.5s;"></div>
                     <div class="absolute -bottom-4 -left-4 w-20 h-20 bg-pink-100 rounded-full opacity-70 floating" style="animation-delay: 1s;"></div>
+                    <div class="absolute top-1/2 right-1/4 w-16 h-16 bg-blue-100 rounded-full opacity-50 floating" style="animation-delay: 1.5s;"></div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section id="features" class="py-20 px-6 bg-white">
+    <section id="features" class="py-20 px-6 bg-white relative overflow-hidden">
         <div class="container mx-auto max-w-6xl">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Powerful Creative Tools</h2>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Everything you need to bring your creative vision to life, powered by advanced AI.</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 animate-fadeInUp">Powerful Creative Tools</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto animate-fadeInUp stagger-1">Everything you need to bring your creative vision to life, powered by advanced AI.</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Feature 1 -->
-                <div class="card p-6">
-                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-xl mb-4">
+                <div class="card p-6 feature-card hover-lift animate-fadeInUp stagger-1">
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-xl mb-4 feature-icon">
                         <i data-lucide="palette" class="w-7 h-7"></i>
                     </div>
                     <h3 class="text-xl font-bold text-gray-800 mb-3">Design Tools</h3>
@@ -272,8 +448,8 @@
                 </div>
                 
                 <!-- Feature 2 -->
-                <div class="card p-6">
-                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white text-xl mb-4">
+                <div class="card p-6 feature-card hover-lift animate-fadeInUp stagger-2">
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white text-xl mb-4 feature-icon">
                         <i data-lucide="file-edit" class="w-7 h-7"></i>
                     </div>
                     <h3 class="text-xl font-bold text-gray-800 mb-3">Content Creator</h3>
@@ -295,8 +471,8 @@
                 </div>
                 
                 <!-- Feature 3 -->
-                <div class="card p-6">
-                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center text-white text-xl mb-4">
+                <div class="card p-6 feature-card hover-lift animate-fadeInUp stagger-3">
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center text-white text-xl mb-4 feature-icon">
                         <i data-lucide="lightbulb" class="w-7 h-7"></i>
                     </div>
                     <h3 class="text-xl font-bold text-gray-800 mb-3">AI Brainstormer</h3>
@@ -318,8 +494,8 @@
                 </div>
                 
                 <!-- Feature 4 -->
-                <div class="card p-6">
-                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center text-white text-xl mb-4">
+                <div class="card p-6 feature-card hover-lift animate-fadeInUp stagger-4">
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center text-white text-xl mb-4 feature-icon">
                         <i data-lucide="clapperboard" class="w-7 h-7"></i>
                     </div>
                     <h3 class="text-xl font-bold text-gray-800 mb-3">Media Ideas</h3>
@@ -341,8 +517,8 @@
                 </div>
                 
                 <!-- Feature 5 -->
-                <div class="card p-6">
-                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-red-500 to-pink-500 flex items-center justify-center text-white text-xl mb-4">
+                <div class="card p-6 feature-card hover-lift animate-fadeInUp stagger-5">
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-red-500 to-pink-500 flex items-center justify-center text-white text-xl mb-4 feature-icon">
                         <i data-lucide="scan-text" class="w-7 h-7"></i>
                     </div>
                     <h3 class="text-xl font-bold text-gray-800 mb-3">Design Critique</h3>
@@ -354,7 +530,7 @@
                         </li>
                         <li class="flex items-center gap-2">
                             <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
-                            <span>Copy Improvement(Coming Soon)</span>
+                            <span>Copy Improvement (Coming Soon)</span>
                         </li>
                         <li class="flex items-center gap-2">
                             <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
@@ -364,12 +540,10 @@
                 </div>
                 
                 <!-- Feature 6 -->
-                <div class="card p-6">
-                  <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white text-xl mb-4">
-  <img src="https://aditya-cmd-max.github.io/exonovaai/logo.png" alt="Exonova Logo" class="w-8 h-8 object-contain" />
-</div>
-
-                   
+                <div class="card p-6 feature-card hover-lift animate-fadeInUp stagger-6">
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white text-xl mb-4 feature-icon">
+                        <img src="https://aditya-cmd-max.github.io/exonovaai/logo.png" alt="Exonova Logo" class="w-8 h-8 object-contain" />
+                    </div>
                     <h3 class="text-xl font-bold text-gray-800 mb-3">AI-Powered</h3>
                     <p class="text-gray-600 mb-4">Powered by Exonova's El Futuro AI for the most advanced creative assistance available.</p>
                     <ul class="text-gray-500 space-y-2">
@@ -383,7 +557,7 @@
                         </li>
                         <li class="flex items-center gap-2">
                             <i data-lucide="check" class="w-4 h-4 text-green-500"></i>
-                            <span>Iterative Improvements(Coming Soon)</span>
+                            <span>Iterative Improvements (Coming Soon)</span>
                         </li>
                     </ul>
                 </div>
@@ -392,19 +566,19 @@
     </section>
 
     <!-- How It Works Section -->
-    <section id="how-it-works" class="py-20 px-6 bg-gray-50">
+    <section id="how-it-works" class="py-20 px-6 bg-gray-50 relative overflow-hidden">
         <div class="container mx-auto max-w-6xl">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">How It Works</h2>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Simple steps to unlock your creative potential with AI assistance.</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 animate-fadeInUp">How It Works</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto animate-fadeInUp stagger-1">Simple steps to unlock your creative potential with AI assistance.</p>
             </div>
             
             <div class="flex flex-col md:flex-row gap-8 items-center">
                 <div class="md:w-1/2">
                     <div class="space-y-8">
                         <!-- Step 1 -->
-                        <div class="flex gap-6">
-                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-lg">
+                        <div class="flex gap-6 animate-fadeInLeft stagger-1">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-lg animate-pulse-slow">
                                 1
                             </div>
                             <div>
@@ -414,8 +588,8 @@
                         </div>
                         
                         <!-- Step 2 -->
-                        <div class="flex gap-6">
-                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white font-bold text-lg">
+                        <div class="flex gap-6 animate-fadeInLeft stagger-2">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white font-bold text-lg animate-pulse-slow">
                                 2
                             </div>
                             <div>
@@ -425,8 +599,8 @@
                         </div>
                         
                         <!-- Step 3 -->
-                        <div class="flex gap-6">
-                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center text-white font-bold text-lg">
+                        <div class="flex gap-6 animate-fadeInLeft stagger-3">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center text-white font-bold text-lg animate-pulse-slow">
                                 3
                             </div>
                             <div>
@@ -436,8 +610,8 @@
                         </div>
                         
                         <!-- Step 4 -->
-                        <div class="flex gap-6">
-                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center text-white font-bold text-lg">
+                        <div class="flex gap-6 animate-fadeInLeft stagger-4">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center text-white font-bold text-lg animate-pulse-slow">
                                 4
                             </div>
                             <div>
@@ -449,37 +623,37 @@
                 </div>
                 
                 <div class="md:w-1/2">
-                    <div class="card p-6">
+                    <div class="card p-6 gradient-border animate-fadeInRight">
                         <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8">
                             <div class="mb-6">
                                 <h3 class="text-2xl font-bold text-gray-800 mb-2">Try It Yourself</h3>
                                 <p class="text-gray-600">See how the AI Brainstormer can help generate creative project names.</p>
                             </div>
                             
-                            <div class="bg-white rounded-xl p-4 mb-4">
+                            <div class="bg-white rounded-xl p-4 mb-4 glow">
                                 <p class="text-gray-700 font-medium">"Brainstorm 5 creative names for an eco-friendly coffee shop"</p>
                             </div>
                             
                             <div class="space-y-3">
-                                <div class="bg-white rounded-lg p-3 shadow-sm">
+                                <div class="bg-white rounded-lg p-3 shadow-sm hover-lift">
                                     <p class="text-gray-800 font-medium">1. Earth Brew Collective</p>
                                 </div>
-                                <div class="bg-white rounded-lg p-3 shadow-sm">
+                                <div class="bg-white rounded-lg p-3 shadow-sm hover-lift">
                                     <p class="text-gray-800 font-medium">2. Conscious Coffee Hub</p>
                                 </div>
-                                <div class="bg-white rounded-lg p-3 shadow-sm">
+                                <div class="bg-white rounded-lg p-3 shadow-sm hover-lift">
                                     <p class="text-gray-800 font-medium">3. Green Bean Sanctuary</p>
                                 </div>
-                                <div class="bg-white rounded-lg p-3 shadow-sm">
+                                <div class="bg-white rounded-lg p-3 shadow-sm hover-lift">
                                     <p class="text-gray-800 font-medium">4. Sustainable Sips Café</p>
                                 </div>
-                                <div class="bg-white rounded-lg p-3 shadow-sm">
+                                <div class="bg-white rounded-lg p-3 shadow-sm hover-lift">
                                     <p class="text-gray-800 font-medium">5. Eco Roast Retreat</p>
                                 </div>
                             </div>
                             
                             <div class="mt-6 text-center">
-                                <a href="#app" class="btn-primary px-6 py-3 rounded-xl font-semibold inline-block">
+                                <a href="#app" class="btn-primary px-6 py-3 rounded-xl font-semibold inline-block hover-lift">
                                     Try All Tools
                                 </a>
                             </div>
@@ -491,16 +665,16 @@
     </section>
 
     <!-- Testimonials Section -->
-    <section id="testimonials" class="py-20 px-6 bg-white">
+    <section id="testimonials" class="py-20 px-6 bg-white relative overflow-hidden">
         <div class="container mx-auto max-w-6xl">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Loved by Creators</h2>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">See what designers, writers, and creators are saying about Clover Lotus Studio.</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 animate-fadeInUp">Loved by Creators</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto animate-fadeInUp stagger-1">See what designers, writers, and creators are saying about Clover Lotus Studio.</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Testimonial 1 -->
-                <div class="card p-6">
+                <div class="card p-6 hover-lift animate-fadeInUp stagger-1">
                     <div class="flex items-center gap-4 mb-4">
                         <div class="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold">
                             S
@@ -521,7 +695,7 @@
                 </div>
                 
                 <!-- Testimonial 2 -->
-                <div class="card p-6">
+                <div class="card p-6 hover-lift animate-fadeInUp stagger-2">
                     <div class="flex items-center gap-4 mb-4">
                         <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white font-bold">
                             M
@@ -542,7 +716,7 @@
                 </div>
                 
                 <!-- Testimonial 3 -->
-                <div class="card p-6">
+                <div class="card p-6 hover-lift animate-fadeInUp stagger-3">
                     <div class="flex items-center gap-4 mb-4">
                         <div class="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center text-white font-bold">
                             A
@@ -566,20 +740,20 @@
     </section>
 
     <!-- CTA Section -->
-    <section id="app" class="py-20 px-6 bg-gradient-to-br from-purple-500 to-pink-500 text-white">
+    <section id="app" class="py-20 px-6 bg-gradient-to-br from-purple-500 to-pink-500 text-white relative overflow-hidden">
         <div class="container mx-auto max-w-4xl text-center">
-            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Boost Your Creativity?</h2>
-            <p class="text-xl opacity-90 mb-8 max-w-2xl mx-auto">Join thousands of creators who are already using Clover Studio to bring their ideas to life.</p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="https://aditya-cmd-max.github.io/clover/app/" class="bg-white text-purple-600 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-100 transition-colors">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 animate-fadeInUp">Ready to Boost Your Creativity?</h2>
+            <p class="text-xl opacity-90 mb-8 max-w-2xl mx-auto animate-fadeInUp stagger-1">Join thousands of creators who are already using Clover Studio to bring their ideas to life.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fadeInUp stagger-2">
+                <a href="https://aditya-cmd-max.github.io/clover/app/" class="bg-white text-purple-600 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-100 transition-colors hover-lift">
                     <i data-lucide="sparkles" class="w-5 h-5 mr-2 inline-block"></i>
                     Start Creating Now
                 </a>
-                <a href="#features" class="bg-transparent border-2 border-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white hover:bg-opacity-10 transition-colors">
+                <a href="#features" class="bg-transparent border-2 border-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white hover:bg-opacity-10 transition-colors hover-lift">
                     Explore Features
                 </a>
             </div>
-            <p class="mt-6 opacity-80">No credit card required • Free to start • Cancel anytime</p>
+            <p class="mt-6 opacity-80 animate-fadeInUp stagger-3">No credit card required • Free to start • Cancel anytime</p>
         </div>
     </section>
 
@@ -588,30 +762,30 @@
         <div class="container mx-auto max-w-6xl">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="flex items-center gap-3 mb-6 md:mb-0">
-                  <div class="w-12 h-12 rounded-xl flex items-center justify-center">
-  <img src="https://aditya-cmd-max.github.io/exonova-/cloverlogo.png" alt="Clover Lotus Logo" class="w-full h-full object-contain" />
-</div>
-<div>
-
-                    <span class="text-xl font-bold">Clover Studio</span>
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center">
+                        <img src="https://aditya-cmd-max.github.io/exonova-/cloverlogo.png" alt="Clover Lotus Logo" class="w-full h-full object-contain" />
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold">Clover Studio</span>
+                    </div>
                 </div>
                 
                 <div class="flex flex-wrap justify-center gap-8 mb-6 md:mb-0">
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Features</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Pricing</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Blog</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Support</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors hover-lift">Features</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors hover-lift">Pricing</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors hover-lift">Blog</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors hover-lift">Support</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors hover-lift">Privacy</a>
                 </div>
                 
                 <div class="flex gap-4">
-                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 transition-colors">
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 transition-colors hover-lift">
                         <i data-lucide="twitter" class="w-5 h-5"></i>
                     </a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 transition-colors">
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 transition-colors hover-lift">
                         <i data-lucide="instagram" class="w-5 h-5"></i>
                     </a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 transition-colors">
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 transition-colors hover-lift">
                         <i data-lucide="github" class="w-5 h-5"></i>
                     </a>
                 </div>
@@ -652,6 +826,63 @@
                     document.getElementById('mobile-menu').classList.add('hidden');
                 }
             });
+        });
+        
+        // Scroll progress indicator
+        window.addEventListener('scroll', function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('scroll-progress').style.width = scrolled + '%';
+        });
+        
+        // Create particle background
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size
+                const size = Math.random() * 60 + 20;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Random animation delay and duration
+                particle.style.animationDelay = `${Math.random() * 15}s`;
+                particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        // Initialize particles
+        createParticles();
+        
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all animated elements
+        document.querySelectorAll('.animate-fadeInUp, .animate-fadeInLeft, .animate-fadeInRight').forEach(el => {
+            observer.observe(el);
         });
     </script>
 </body>
