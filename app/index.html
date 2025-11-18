@@ -605,6 +605,36 @@
                 max-width: 320px;
             }
         }
+        
+        /* API Status Indicator */
+        .api-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+        }
+        
+        .api-status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        
+        .api-status-good {
+            background-color: #10B981;
+        }
+        
+        .api-status-warning {
+            background-color: #F59E0B;
+        }
+        
+        .api-status-critical {
+            background-color: #EF4444;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -670,9 +700,13 @@
                 </nav>
             </div>
             <div class="border-t border-gray-200 pt-6">
-                 <a href="#" class="flex items-center gap-3 text-gray-600 hover:text-gray-900 transition-colors p-2 rounded-lg hover:bg-gray-100">
+                <div class="api-status mb-4">
+                    <div class="api-status-indicator api-status-good" id="api-status-indicator"></div>
+                    <span id="api-status-text">All Apps Operational</span>
+                </div>
+                <a href="#" class="flex items-center gap-3 text-gray-600 hover:text-gray-900 transition-colors p-2 rounded-lg hover:bg-gray-100" id="api-status-btn">
                     <i data-lucide="settings" class="w-5 h-5"></i>
-                    <span>Settings</span>
+                    <span>App Status</span>
                 </a>
             </div>
             <div class="resize-handle"></div>
@@ -933,9 +967,65 @@
         </div>
     </div>
 
+    <!-- API Status Modal -->
+    <div id="api-status-modal" class="modal fixed inset-0 flex items-center justify-center opacity-0 pointer-events-none z-[60]">
+        <div class="modal-content card p-6 md:p-8 w-full max-w-2xl mx-4 blurry-bg">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl md:text-2xl font-bold text-gray-800">API Status Dashboard</h3>
+                <button id="close-api-modal-btn" class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <i data-lucide="x" class="w-5 h-5 md:w-6 md:h-6"></i>
+                </button>
+            </div>
+            <div class="space-y-4 max-h-96 overflow-y-auto">
+                <div id="api-status-list">
+                    <!-- API status items will be dynamically added here -->
+                </div>
+            </div>
+            <div class="mt-6 flex justify-between items-center">
+                <button id="reset-api-usage-btn" class="px-5 py-2 md:px-6 md:py-2 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors">
+                    Reset Usage Counters
+                </button>
+                <button id="close-api-status-btn" class="btn-primary px-5 py-2 md:px-6 md:py-2 rounded-xl font-semibold">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // --- Configuration ---
-        const apiKey = "AIzaSyCR9N54B5Lm4QCJwKB8y371aIdxPJVE4-w"; 
+        // Multiple API Keys for different functions
+        const apiKeys = [
+            "AIzaSyCR9N54B5Lm4QCJwKB8y371aIdxPJVE4-w", // API 1 - AI Chat
+            "AIzaSyCgc0TD24XeTjChzzLBNN5N-PPfR4lMmNo", // API 2 - Design Tools
+            "AIzaSyBWaCeI5novnuL0MTOJeH-XhtWhHB6C0oI", // API 3 - Content Creator
+            "AIzaSyB75wX6FBE0zF6DLiJi7hkbcDCcDeztz-g", // API 4 - AI Brainstormer
+            "AIzaSyBu5xtDzq93sEksIuoYeW5hP08NUzLIPOI", // API 5 - Media Ideas
+            "AIzaSyBHIqsCBT5wGjv2HOgjrgVFKk09S3ncPz8", // API 6 - Design Critique
+            "AIzaSyCNWpd-LjfRacnny399YdzhmVYy38VU7YA"  // API 7 - Backup/Extra
+        ];
+
+        // API usage tracking
+        let apiUsage = {
+            0: { used: 0, limit: 1000, name: "AI Chat" }, 
+            1: { used: 0, limit: 1000, name: "Design Tools" },
+            2: { used: 0, limit: 1000, name: "Content Creator" },
+            3: { used: 0, limit: 1000, name: "AI Brainstormer" },
+            4: { used: 0, limit: 1000, name: "Media Ideas" },
+            5: { used: 0, limit: 1000, name: "Design Critique" },
+            6: { used: 0, limit: 1000, name: "Backup API" }
+        };
+
+        // Tool to API mapping
+        const toolToApiMap = {
+            'chat': 0,
+            'typography': 1,
+            'content': 2,
+            'brainstorm': 3,
+            'media': 4,
+            'critique': 5
+        };
+
         const systemInstructions = {
             content: "You are Clover AI, an expert content writer and marketer. Generate clear, engaging, and well-structured content based on the user's request. Use extensive markdown for formatting including headers, lists, and paragraphs.Never use weirds look like continuous ----- or |----| or *** for bold or ## or anything... just answer clearly bold the text with <b> and italic from <i> or underline from <u>. Use • as bullet points.",
             brainstorm: "You are Clover AI, a world-class creative strategist. Provide a diverse range of unique, actionable, and innovative ideas based on the user's topic. Use detailed lists, bullet points, and strong headings for clarity.",
@@ -975,6 +1065,16 @@
             const submitImprovementBtn = document.getElementById('submit-improvement-btn');
             const improvementTextarea = document.getElementById('improvement-prompt-textarea');
             let currentOutputContainer = null; // Store the container being improved
+
+            // API Status Modal Elements
+            const apiStatusModal = document.getElementById('api-status-modal');
+            const apiStatusBtn = document.getElementById('api-status-btn');
+            const closeApiModalBtn = document.getElementById('close-api-modal-btn');
+            const closeApiStatusBtn = document.getElementById('close-api-status-btn');
+            const resetApiUsageBtn = document.getElementById('reset-api-usage-btn');
+            const apiStatusList = document.getElementById('api-status-list');
+            const apiStatusIndicator = document.getElementById('api-status-indicator');
+            const apiStatusText = document.getElementById('api-status-text');
 
             // Chat elements
             const chatMessages = document.getElementById('chat-messages');
@@ -1035,6 +1135,102 @@
                     showToast('Failed to copy text.', 'error');
                 }
                 document.body.removeChild(tempInput);
+            }
+
+            // --- API Management Functions ---
+            
+            // Function to get the appropriate API key for a tool
+            function getApiKeyForTool(toolType) {
+                let apiIndex = toolToApiMap[toolType] || 6; // Default to backup API
+                
+                // Check if primary API is near limit
+                if (apiUsage[apiIndex].used >= apiUsage[apiIndex].limit * 0.9) {
+                    showToast(`Primary API near limit, using backup API for ${toolType}`, 'info');
+                    apiIndex = 6; // Use backup API
+                }
+                
+                // Increment usage counter
+                apiUsage[apiIndex].used++;
+                
+                // Update API status display
+                updateApiStatusDisplay();
+                
+                return apiKeys[apiIndex];
+            }
+
+            // Function to reset API usage
+            function resetApiUsage() {
+                Object.keys(apiUsage).forEach(key => {
+                    apiUsage[key].used = 0;
+                });
+                updateApiStatusDisplay();
+                showToast("API usage counters reset", 'info');
+            }
+
+            // Function to update API status display
+            function updateApiStatusDisplay() {
+                // Update overall status indicator
+                let criticalApis = 0;
+                let warningApis = 0;
+                
+                Object.keys(apiUsage).forEach(key => {
+                    const usage = apiUsage[key];
+                    const usagePercent = (usage.used / usage.limit) * 100;
+                    
+                    if (usagePercent >= 90) {
+                        criticalApis++;
+                    } else if (usagePercent >= 75) {
+                        warningApis++;
+                    }
+                });
+                
+                if (criticalApis > 0) {
+                    apiStatusIndicator.className = 'api-status-indicator api-status-critical';
+                    apiStatusText.textContent = `${criticalApis} API(s) Critical`;
+                } else if (warningApis > 0) {
+                    apiStatusIndicator.className = 'api-status-indicator api-status-warning';
+                    apiStatusText.textContent = `${warningApis} API(s) Warning`;
+                } else {
+                    apiStatusIndicator.className = 'api-status-indicator api-status-good';
+                    apiStatusText.textContent = 'All APIs Operational';
+                }
+                
+                // Update API status list in modal
+                apiStatusList.innerHTML = '';
+                
+                Object.keys(apiUsage).forEach(key => {
+                    const api = apiUsage[key];
+                    const usagePercent = (api.used / api.limit) * 100;
+                    
+                    let statusClass = 'api-status-good';
+                    let statusText = 'Good';
+                    
+                    if (usagePercent >= 90) {
+                        statusClass = 'api-status-critical';
+                        statusText = 'Critical';
+                    } else if (usagePercent >= 75) {
+                        statusClass = 'api-status-warning';
+                        statusText = 'Warning';
+                    }
+                    
+                    const apiStatusItem = document.createElement('div');
+                    apiStatusItem.className = 'flex justify-between items-center p-3 bg-white rounded-lg border border-gray-200';
+                    apiStatusItem.innerHTML = `
+                        <div class="flex items-center gap-3">
+                            <div class="api-status-indicator ${statusClass}"></div>
+                            <div>
+                                <p class="font-medium text-gray-800">${api.name}</p>
+                                <p class="text-xs text-gray-500">API ${parseInt(key) + 1}</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-medium text-gray-800">${api.used} / ${api.limit}</p>
+                            <p class="text-xs text-gray-500">${usagePercent.toFixed(1)}% used</p>
+                        </div>
+                    `;
+                    
+                    apiStatusList.appendChild(apiStatusItem);
+                });
             }
 
             // --- General UI Logic ---
@@ -1101,6 +1297,34 @@
                     document.body.style.userSelect = '';
                 });
             }
+
+            // --- API Status Modal Functions ---
+            function openApiStatusModal() {
+                updateApiStatusDisplay();
+                apiStatusModal.classList.remove('opacity-0', 'pointer-events-none');
+                apiStatusModal.classList.add('open');
+            }
+
+            function closeApiStatusModal() {
+                apiStatusModal.classList.add('opacity-0', 'pointer-events-none');
+                apiStatusModal.classList.remove('open');
+            }
+
+            apiStatusBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                openApiStatusModal();
+            });
+
+            closeApiModalBtn.addEventListener('click', closeApiStatusModal);
+            closeApiStatusBtn.addEventListener('click', closeApiStatusModal);
+            resetApiUsageBtn.addEventListener('click', resetApiUsage);
+
+            // Close modal on outside click
+            apiStatusModal.addEventListener('click', (e) => {
+                if (e.target === apiStatusModal) {
+                    closeApiStatusModal();
+                }
+            });
 
             // --- Chat Interface Functions ---
             
@@ -1352,7 +1576,8 @@
 
 
             // --- Core Gemini API Logic ---
-            async function generateWithGemini(userQuery, systemPrompt, outputContainer) {
+            async function generateWithGemini(userQuery, systemPrompt, outputContainer, toolType = 'content') {
+                const apiKey = getApiKeyForTool(toolType);
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
                 
                 // CRITICAL FIX FOR TypeError: Ensure outputContainer is a valid DOM element
@@ -1437,6 +1662,7 @@
             
             // Gemini API for chat with image support
             async function generateWithGeminiChat(message, imageData) {
+                const apiKey = getApiKeyForTool('chat');
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
                 
                 let parts = [{ text: message }];
@@ -1641,7 +1867,7 @@
                 const newPrompt = `Original request: "${originalPrompt}"\n\nNow improve this with the following changes: ${improvementText}\n\nPlease provide the improved version directly without any additional explanations.`;
                 
                 const systemPrompt = systemInstructions.improve;
-                const result = await generateWithGemini(newPrompt, systemPrompt, currentOutputContainer);
+                const result = await generateWithGemini(newPrompt, systemPrompt, currentOutputContainer, toolType);
 
                 if (result) {
                     renderAIOutput(currentOutputContainer, result, originalPrompt);
@@ -1666,7 +1892,7 @@
                         }
                         
                         const systemPrompt = systemInstructions[toolType];
-                        const result = await generateWithGemini(prompt, systemPrompt, outputContainer);
+                        const result = await generateWithGemini(prompt, systemPrompt, outputContainer, toolType);
 
                         if (result) {
                             renderAIOutput(outputContainer, result, prompt);
@@ -1680,9 +1906,9 @@
             initializeShadowTool();
             initializeAITools();
             initSidebarResize();
+            updateApiStatusDisplay(); // Initialize API status display
         }
     </script>
 
 </body>
 </html>
-
